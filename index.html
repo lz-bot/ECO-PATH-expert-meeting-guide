@@ -335,34 +335,6 @@
       margin-top: 8px;
     }
 
-    .submissions-list {
-      margin-top: 12px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .submission-card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #fbfcfa;
-      padding: 10px;
-    }
-
-    .submission-card h3 {
-      margin: 0 0 6px;
-      font-size: 14px;
-    }
-
-    .submission-card p {
-      margin: 4px 0;
-      font-size: 13px;
-    }
-
-    .submission-meta {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
     @media (max-width: 860px) {
       .topbar { align-items: flex-start; flex-direction: column; }
       .controls { justify-content: flex-start; }
@@ -902,9 +874,9 @@
           <h2 class="nl">Geexporteerde vergadernotities</h2>
           <h2 class="zh">导出的会议记录</h2>
           <div class="info">
-            <span class="en">Local drafts are saved only in this browser. Submit response saves the scoping fields to the shared database. Submitted responses may be visible to anyone who can open this page. Contact fields and detailed internal notes remain local/export-only.</span>
-            <span class="nl">Lokale concepten worden alleen in deze browser opgeslagen. Antwoord indienen slaat de scopingvelden op in de gedeelde database. Ingediende antwoorden kunnen zichtbaar zijn voor iedereen die deze pagina kan openen. Contactvelden en gedetailleerde interne notities blijven lokaal of export-only.</span>
-            <span class="zh">本地草稿只保存在当前浏览器中。“提交记录”只把 scoping 字段保存到共享数据库。已提交记录可能对任何能打开此网页的人可见。联系人和详细内部备注仍只保留在本地或导出文件中。</span>
+            <span class="en">Local drafts are saved only in this browser. Submit response saves the scoping fields to the shared database. Public visitors can submit responses, but they cannot view submitted records from this page.</span>
+            <span class="nl">Lokale concepten worden alleen in deze browser opgeslagen. Antwoord indienen slaat de scopingvelden op in de gedeelde database. Publieke bezoekers kunnen antwoorden indienen, maar kunnen ingediende records niet via deze pagina bekijken.</span>
+            <span class="zh">本地草稿只保存在当前浏览器中。“提交记录”会把 scoping 字段保存到共享数据库。公开访问者可以提交，但不能从这个网页查看已提交记录。</span>
           </div>
           <textarea id="export-output" class="export-box" readonly></textarea>
           <div class="footer-actions">
@@ -912,11 +884,9 @@
             <button type="button" id="download-btn"><span class="en">Download .md</span><span class="nl">Download .md</span><span class="zh">下载 .md</span></button>
             <button type="button" id="download-html-btn"><span class="en">Download filled HTML</span><span class="nl">Download ingevulde HTML</span><span class="zh">下载已填写 HTML</span></button>
             <button type="button" id="submit-btn" class="primary"><span class="en">Submit response</span><span class="nl">Antwoord indienen</span><span class="zh">提交记录</span></button>
-            <button type="button" id="view-submissions-btn"><span class="en">View submissions</span><span class="nl">Bekijk inzendingen</span><span class="zh">查看已提交记录</span></button>
             <button type="button" id="reset-btn"><span class="en">Reset saved fields</span><span class="nl">Wis opgeslagen velden</span><span class="zh">清空已保存内容</span></button>
           </div>
           <div id="export-status" class="status-line" role="status" aria-live="polite"></div>
-          <div id="submissions-output" class="submissions-list" hidden></div>
         </div>
       </section>
     </section>
@@ -1158,9 +1128,28 @@
       const expertId = currentExpertId();
       const note = key => valueBySave(expertId + ".note." + key);
       const shared = key => valueBySave("shared." + key);
+      const combine = values => values.filter(value => value && value.trim()).join("\n\n");
       const row = {
         expert: activeExpertName(),
         language: document.body.dataset.lang || "en",
+        q1_asked: Boolean(valueBySave(expertId + ".core.q1")),
+        q1_answer: note("pathway"),
+        q2_asked: Boolean(valueBySave(expertId + ".core.q2")),
+        q2_answer: note("start"),
+        q3_asked: Boolean(valueBySave(expertId + ".core.q3")),
+        q3_answer: note("endpoint"),
+        q4_asked: Boolean(valueBySave(expertId + ".core.q4")),
+        q4_answer: note("steps"),
+        q5_asked: Boolean(valueBySave(expertId + ".core.q5")),
+        q5_answer: combine([
+          note("branches"),
+          note("transfer") ? "General hospital versus UMC criteria:\n" + note("transfer") : ""
+        ]),
+        q6_asked: Boolean(valueBySave(expertId + ".core.q6")),
+        q6_answer: combine([
+          note("documents"),
+          note("document_timing") ? "When documents can be shared:\n" + note("document_timing") : ""
+        ]),
         recommended_pathway: note("pathway"),
         start_point: note("start"),
         endpoint: note("endpoint"),
@@ -1169,8 +1158,12 @@
         transfer_criteria: note("transfer"),
         protocols_documents: note("documents"),
         document_timing: note("document_timing"),
+        existing_data_sources: note("data_sources"),
         unresolved_questions: note("unresolved"),
         next_action: note("next_action"),
+        pathway_locked: shared("pathway_locked"),
+        boundaries_locked: shared("boundaries_locked"),
+        map_ready: shared("map_ready"),
         scope_sentence: shared("scope_sentence"),
         parking_lot: shared("parking"),
         action_points: shared("actions")
@@ -1188,6 +1181,7 @@
         row.transfer_criteria,
         row.protocols_documents,
         row.document_timing,
+        row.existing_data_sources,
         row.scope_sentence,
         row.next_action
       ].some(value => value && value.trim());
@@ -1219,7 +1213,7 @@
           method: "POST",
           headers: supabaseHeaders({
             "Content-Type": "application/json",
-            Prefer: "return=representation"
+            Prefer: "return=minimal"
           }),
           body: JSON.stringify(row)
         });
@@ -1234,106 +1228,11 @@
           "Antwoord opgeslagen in de gedeelde database.",
           "记录已提交到共享数据库。"
         );
-        await viewSubmissions();
       } catch (error) {
         showStatus(
           "Submission failed. Check that the Supabase table, grants, and policies exist. Details: " + error.message.slice(0, 220),
           "Indienen mislukt. Controleer of de Supabase-tabel, grants en policies bestaan. Details: " + error.message.slice(0, 220),
           "提交失败。请确认 Supabase 表、grant 权限和 RLS 策略已经创建。详情：" + error.message.slice(0, 220)
-        );
-      }
-    }
-
-    function appendSubmissionLine(card, label, value) {
-      if (!value) return;
-      const line = document.createElement("p");
-      const strong = document.createElement("strong");
-      strong.textContent = label + ": ";
-      line.appendChild(strong);
-      line.appendChild(document.createTextNode(value));
-      card.appendChild(line);
-    }
-
-    function renderSubmissions(rows) {
-      const output = document.getElementById("submissions-output");
-      output.hidden = false;
-      output.textContent = "";
-
-      if (!rows.length) {
-        const empty = document.createElement("p");
-        empty.className = "hint";
-        empty.textContent = uiText("No submitted responses yet.", "Nog geen ingediende antwoorden.", "还没有已提交记录。");
-        output.appendChild(empty);
-        return;
-      }
-
-      rows.forEach(row => {
-        const card = document.createElement("div");
-        card.className = "submission-card";
-
-        const heading = document.createElement("h3");
-        heading.textContent = row.recommended_pathway || uiText("Untitled submission", "Inzending zonder titel", "未命名提交");
-        card.appendChild(heading);
-
-        const meta = document.createElement("p");
-        meta.className = "submission-meta";
-        const created = row.created_at ? new Date(row.created_at).toLocaleString() : "";
-        meta.textContent = [created, row.expert].filter(Boolean).join(" | ");
-        card.appendChild(meta);
-
-        appendSubmissionLine(card, uiText("Start point", "Startpunt", "起点"), row.start_point);
-        appendSubmissionLine(card, uiText("Endpoint", "Eindpunt", "终点"), row.endpoint);
-        appendSubmissionLine(card, uiText("Main steps", "Belangrijkste stappen", "主要步骤"), row.main_clinical_steps);
-        appendSubmissionLine(card, uiText("Branches", "Vertakkingen", "分支"), row.branches_variants);
-        appendSubmissionLine(card, uiText("General hospital versus UMC", "Algemeen ziekenhuis versus UMC", "General hospital vs UMC"), row.transfer_criteria);
-        appendSubmissionLine(card, uiText("Documents", "Documenten", "文件"), row.protocols_documents);
-        appendSubmissionLine(card, uiText("Document timing", "Timing documenten", "文件获取时间"), row.document_timing);
-        appendSubmissionLine(card, uiText("Next action", "Vervolgactie", "下一步行动"), row.next_action);
-
-        output.appendChild(card);
-      });
-    }
-
-    async function viewSubmissions() {
-      showStatus("Loading submitted responses...", "Ingediende antwoorden laden...", "正在读取已提交记录...");
-      try {
-        const fields = [
-          "id",
-          "created_at",
-          "expert",
-          "language",
-          "recommended_pathway",
-          "start_point",
-          "endpoint",
-          "main_clinical_steps",
-          "branches_variants",
-          "transfer_criteria",
-          "protocols_documents",
-          "document_timing",
-          "next_action"
-        ].join(",");
-        const response = await fetch(SUPABASE_URL + "/rest/v1/" + SUBMISSIONS_TABLE + "?select=" + fields + "&order=created_at.desc&limit=20", {
-          headers: supabaseHeaders({ Accept: "application/json" })
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(errorText || response.statusText);
-        }
-
-        const rows = await response.json();
-        renderSubmissions(rows);
-        showStatus(
-          "Submitted responses loaded.",
-          "Ingediende antwoorden geladen.",
-          "已读取提交记录。"
-        );
-      } catch (error) {
-        document.getElementById("submissions-output").hidden = true;
-        showStatus(
-          "Could not load submissions. Check that the Supabase table, grants, and select policy exist. Details: " + error.message.slice(0, 220),
-          "Kon inzendingen niet laden. Controleer of de Supabase-tabel, grants en select-policy bestaan. Details: " + error.message.slice(0, 220),
-          "无法读取提交记录。请确认 Supabase 表、grant 权限和 select 策略已经创建。详情：" + error.message.slice(0, 220)
         );
       }
     }
@@ -1503,7 +1402,6 @@
     document.getElementById("download-btn").addEventListener("click", downloadMarkdown);
     document.getElementById("download-html-btn").addEventListener("click", downloadFilledHtml);
     document.getElementById("submit-btn").addEventListener("click", submitResponse);
-    document.getElementById("view-submissions-btn").addEventListener("click", viewSubmissions);
     document.getElementById("reset-btn").addEventListener("click", resetSavedFields);
     document.getElementById("copy-btn").addEventListener("click", async () => {
       const text = exportNotes();

@@ -16,16 +16,17 @@ The guide helps capture clear expert answers on:
 - recommended first pathway;
 - start point;
 - endpoint;
+- answers to the six core expert questions;
 - main clinical steps;
 - key branches or variants;
 - general hospital versus UMC referral or transfer criteria;
-- relevant protocols, workflow documents, timing for receiving documents, and validation contacts.
+- relevant protocols, workflow documents, timing for receiving documents, final lock decisions, and next actions.
 
 It supports English, Dutch, and Chinese views.
 
 ## Important limitation
 
-The guide is a standalone HTML file. Local drafts are saved only in the current browser through local storage. Submitted scoping responses are stored in the configured Supabase database and may be visible to anyone who can open the page. Contact fields and detailed internal notes remain local/export-only.
+The guide is a standalone HTML file. Local drafts are saved only in the current browser through local storage. Submitted scoping responses are stored in the configured Supabase database. Public visitors can submit responses, but they cannot view submitted records from the page. Contact fields remain local/export-only.
 
 To share meeting results, use one of the export options in the page:
 
@@ -33,7 +34,6 @@ To share meeting results, use one of the export options in the page:
 - `Download .md`
 - `Download filled HTML`
 - `Submit response`
-- `View submissions`
 
 ## Data protection note
 
