@@ -6,18 +6,20 @@
   <title>ECO-PATH Expert Meeting Guide EN/NL/ZH</title>
   <style>
     :root {
-      --bg: #f7f8f5;
+      --bg: #f4fbfe;
       --panel: #ffffff;
-      --ink: #1f2a2e;
-      --muted: #607077;
-      --line: #d9e0dc;
-      --accent: #0f766e;
-      --accent-dark: #115e59;
+      --ink: #173244;
+      --muted: #5c6f7c;
+      --line: #d3e9f4;
+      --accent: #6fcff1;
+      --accent-dark: #154a8b;
+      --accent-soft: rgba(111, 207, 241, 0.18);
+      --accent-soft-strong: rgba(111, 207, 241, 0.3);
       --warn: #a16207;
-      --soft: #e8f3f1;
+      --soft: rgba(111, 207, 241, 0.16);
       --soft-warn: #fff7df;
-      --shadow: 0 8px 22px rgba(28, 48, 45, 0.08);
-      --radius: 8px;
+      --shadow: 0 10px 26px rgba(21, 74, 139, 0.08);
+      --radius: 12px;
       --mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
       --sans: Inter, "Segoe UI", Roboto, Arial, sans-serif;
     }
@@ -43,9 +45,9 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      background: rgba(247, 248, 245, 0.96);
+      background: rgba(244, 251, 254, 0.94);
       border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
     }
 
     .topbar {
@@ -56,6 +58,24 @@
       gap: 14px;
       align-items: center;
       justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 150px;
+      height: auto;
+      flex: 0 0 auto;
+      filter: drop-shadow(0 4px 10px rgba(21, 74, 139, 0.08));
+    }
+
+    .brand-copy {
+      min-width: 0;
     }
 
     h1, h2, h3, p { margin-top: 0; }
@@ -79,27 +99,39 @@
     }
 
     button, .tab {
-      border: 1px solid var(--line);
-      background: var(--panel);
-      color: var(--ink);
+      border: 1px solid rgba(111, 207, 241, 0.58);
+      background: var(--accent-soft);
+      color: var(--accent-dark);
       border-radius: var(--radius);
       padding: 9px 12px;
       font: inherit;
       cursor: pointer;
+      font-weight: 650;
+      box-shadow: 0 2px 8px rgba(21, 74, 139, 0.05);
+      transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    button:hover, .tab:hover { border-color: var(--accent); }
+    button:hover, .tab:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft-strong);
+      box-shadow: 0 4px 12px rgba(21, 74, 139, 0.08);
+    }
+
     button.primary {
       background: var(--accent);
       border-color: var(--accent);
-      color: white;
+      color: #08324e;
     }
-    button.primary:hover { background: var(--accent-dark); }
+
+    button.primary:hover {
+      background: #8bdcf5;
+      border-color: #55c3e9;
+    }
+
     button.active, .tab.active {
-      background: var(--soft);
+      background: var(--accent);
       border-color: var(--accent);
       color: var(--accent-dark);
-      font-weight: 650;
     }
 
     main {
@@ -148,10 +180,11 @@
     .compact-list li { margin: 5px 0; }
 
     .agenda-item {
-      border-left: 4px solid var(--line);
+      border-left: 4px solid var(--accent);
       padding: 8px 0 8px 10px;
       margin: 8px 0;
-      background: #fbfcfa;
+      background: var(--accent-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
     }
 
     .agenda-item strong { display: block; }
@@ -163,7 +196,7 @@
       margin: 3px 4px 3px 0;
       color: var(--muted);
       font-size: 12px;
-      background: #fbfcfa;
+      background: var(--accent-soft);
     }
 
     .warning {
@@ -177,10 +210,10 @@
 
     .info {
       background: var(--soft);
-      border: 1px solid #b9d8d4;
+      border: 1px solid #a8dff0;
       border-radius: var(--radius);
       padding: 10px;
-      color: var(--accent-dark);
+      color: #184767;
       margin: 12px 0;
       font-size: 13px;
     }
@@ -201,7 +234,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      background: #fbfcfa;
+      background: linear-gradient(90deg, rgba(111, 207, 241, 0.16), #ffffff);
       border-bottom: 1px solid var(--line);
       font-weight: 700;
     }
@@ -210,7 +243,7 @@
     details.section > summary::after {
       content: "+";
       font-size: 20px;
-      color: var(--accent);
+      color: var(--accent-dark);
     }
     details.section[open] > summary::after { content: "-"; }
 
@@ -220,7 +253,7 @@
       grid-template-columns: 76px minmax(0, 1fr);
       gap: 10px;
       padding: 9px 0;
-      border-bottom: 1px solid #edf1ee;
+      border-bottom: 1px solid #e5f3f9;
     }
     .prompt:last-child { border-bottom: 0; }
 
@@ -289,7 +322,7 @@
       gap: 8px;
       align-items: center;
       padding: 8px 0;
-      border-bottom: 1px solid #edf1ee;
+      border-bottom: 1px solid #e5f3f9;
     }
     .decision-row:last-child { border-bottom: 0; }
 
@@ -307,7 +340,7 @@
       text-align: left;
     }
     .matrix th {
-      background: #f2f6f4;
+      background: #eef9fd;
       font-weight: 700;
     }
 
@@ -337,6 +370,8 @@
 
     @media (max-width: 860px) {
       .topbar { align-items: flex-start; flex-direction: column; }
+      .brand { align-items: flex-start; }
+      .brand-logo { width: 132px; }
       .controls { justify-content: flex-start; }
       .grid { grid-template-columns: 1fr; }
       .fields { grid-template-columns: 1fr; }
@@ -356,11 +391,14 @@
 <body data-lang="en">
   <header>
     <div class="topbar">
-      <div>
-        <h1><span class="en">ECO-PATH Expert Meeting Guide</span><span class="nl">ECO-PATH expertmeeting leidraad</span><span class="zh">ECO-PATH 专家访谈引导表</span></h1>
-        <p class="subtitle en">Interactive facilitator sheet for Joost Boormans and Peter Siersema</p>
-        <p class="subtitle nl">Interactieve gespreksleidraad voor Joost Boormans en Peter Siersema</p>
-        <p class="subtitle zh">Joost Boormans 和 Peter Siersema 专家访谈引导表</p>
+      <div class="brand">
+        <img class="brand-logo" src="assets/erasmusmc_logo.png" alt="Erasmus MC logo">
+        <div class="brand-copy">
+          <h1><span class="en">ECO-PATH Expert Meeting Guide</span><span class="nl">ECO-PATH expertmeeting leidraad</span><span class="zh">ECO-PATH 专家访谈引导表</span></h1>
+          <p class="subtitle en">Interactive facilitator sheet for Joost Boormans and Peter Siersema</p>
+          <p class="subtitle nl">Interactieve gespreksleidraad voor Joost Boormans en Peter Siersema</p>
+          <p class="subtitle zh">Joost Boormans 和 Peter Siersema 专家访谈引导表</p>
+        </div>
       </div>
       <div class="controls" aria-label="controls">
         <button type="button" id="lang-en" class="active">English</button>
