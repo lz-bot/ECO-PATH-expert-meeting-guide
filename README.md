@@ -25,13 +25,15 @@ It supports English, Dutch, and Chinese views.
 
 ## Important limitation
 
-The guide is a standalone HTML file. Filled answers are saved only in the current browser through local storage. They do not automatically sync to the original HTML file or to other users.
+The guide is a standalone HTML file. Local drafts are saved only in the current browser through local storage. Submitted scoping responses are stored in the configured Supabase database and may be visible to anyone who can open the page. Contact fields and detailed internal notes remain local/export-only.
 
 To share meeting results, use one of the export options in the page:
 
 - `Export notes`
 - `Download .md`
 - `Download filled HTML`
+- `Submit response`
+- `View submissions`
 
 ## Data protection note
 
