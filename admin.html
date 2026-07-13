@@ -337,6 +337,7 @@
     const SUPABASE_URL = "https://gqzrnjdknocshyncvpey.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable__6prIQF8eGiEeqd1OcYUNQ_z7UGWs_e";
     const SUBMISSIONS_TABLE = "expert_meeting_submissions";
+    const ADMIN_REDIRECT_URL = "https://lz-bot.github.io/ECO-PATH-expert-meeting-guide/admin.html";
 
     const SELECT_FIELDS = [
       "id",
@@ -610,11 +611,10 @@
 
       byId("send-link-btn").disabled = true;
       byId("login-status").textContent = "Sending magic link...";
-      const redirectUrl = window.location.href.split("#")[0].split("?")[0];
       const { error } = await supabaseClient.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: redirectUrl
+          emailRedirectTo: ADMIN_REDIRECT_URL
         }
       });
 
