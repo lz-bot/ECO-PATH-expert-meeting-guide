@@ -1,5 +1,7 @@
 # ECO-PATH Expert Meeting Guide
 
+[Live site](https://lz-bot.github.io/ECO-PATH-expert-meeting-guide/)
+
 This repository contains a standalone interactive HTML guide for targeted ECO-PATH expert meetings.
 
 The guide is designed for the first round of expert consultation, with a narrow focus on pathway scoping before protocol-to-activity mapping. It supports separate meetings with:
