@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ECO-PATH Expert Meeting Submissions</title>
+  <style>
+    :root {
+      --bg: #f5f7f4;
+      --card: #ffffff;
+      --ink: #1f2a2e;
+      --muted: #647174;
+      --line: #d9e1de;
+      --accent: #0a6b64;
+      --accent-soft: #e1f1ee;
+      --danger: #8a3b12;
+      --danger-soft: #fff0df;
+      --radius: 18px;
+      --shadow: 0 12px 32px rgba(25, 48, 45, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    h2, h3 {
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    p { margin: 0; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .muted { color: var(--muted); }
+
+    .panel, .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input, select, button {
+      font: inherit;
+      border-radius: 999px;
+    }
+
+    input, select {
+      border: 1px solid var(--line);
+      padding: 11px 13px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    input[type="email"] {
+      min-width: min(360px, 100%);
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      padding: 11px 14px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+
+    .status {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .warning {
+      background: var(--danger-soft);
+      border: 1px solid #f0c989;
+      color: var(--danger);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-top: 12px;
+      font-weight: 700;
+    }
+
+    .hidden { display: none !important; }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .metric {
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--accent-soft);
+      border: 1px solid #badbd6;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      padding: 18px;
+    }
+
+    .card-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #eef3f1;
+      color: var(--muted);
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .section {
+      margin-top: 14px;
+    }
+
+    .section h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .field {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: #fbfcfa;
+      min-width: 0;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    .field-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 5px;
+    }
+
+    .field-value {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .empty {
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    @media (max-width: 760px) {
+      header, .card-header, .summary, .grid {
+        grid-template-columns: 1fr;
+      }
+      main {
+        width: min(100% - 20px, 1180px);
+      }
+      input[type="email"], input[type="search"], select, button {
+        width: 100%;
+      }
+      .toolbar {
+        align-items: stretch;
+      }
+      .controls {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>ECO-PATH submissions</h1>
+        <p class="muted">Private viewer for expert meeting responses. Access is controlled by Supabase Auth and row-level security.</p>
+      </div>
+      <a href="./index.html">Open meeting guide</a>
+    </header>
+
+    <section id="login-panel" class="panel">
+      <h2>Sign in</h2>
+      <p class="muted">Use the administrator email configured in Supabase. A magic link will be sent to that inbox.</p>
+      <div class="toolbar" style="margin-top: 14px;">
+        <div class="controls">
+          <input id="email-input" type="email" autocomplete="email" placeholder="your.email@example.com">
+          <button id="send-link-btn" class="primary" type="button">Send magic link</button>
+        </div>
+      </div>
+      <div id="login-status" class="status" role="status" aria-live="polite"></div>
+      <div class="warning">If a non-admin email signs in, the page will still load but no submissions will be returned.</div>
+    </section>
+
+    <section id="app-panel" class="hidden">
+      <section class="panel">
+        <div class="toolbar">
+          <div>
+            <h2>Submitted responses</h2>
+            <p id="session-line" class="muted"></p>
+          </div>
+          <div class="controls">
+            <button id="refresh-btn" type="button">Refresh</button>
+            <button id="download-md-btn" type="button">Download .md</button>
+            <button id="download-csv-btn" type="button">Download .csv</button>
+            <button id="sign-out-btn" type="button">Sign out</button>
+          </div>
+        </div>
+        <div class="toolbar" style="margin-top: 14px;">
+          <div class="controls">
+            <select id="expert-filter">
+              <option value="">All experts</option>
+              <option value="Joost Boormans">Joost Boormans</option>
+              <option value="Peter Siersema">Peter Siersema</option>
+            </select>
+            <input id="search-input" type="search" placeholder="Search submissions">
+          </div>
+        </div>
+        <div id="load-status" class="status" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="summary" aria-label="Submission summary">
+        <div class="metric"><strong id="total-count">0</strong><span>Total shown</span></div>
+        <div class="metric"><strong id="joost-count">0</strong><span>Joost</span></div>
+        <div class="metric"><strong id="peter-count">0</strong><span>Peter</span></div>
+        <div class="metric"><strong id="latest-date">-</strong><span>Latest submission</span></div>
+      </section>
+
+      <section id="submissions-list" class="list"></section>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://gqzrnjdknocshyncvpey.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable__6prIQF8eGiEeqd1OcYUNQ_z7UGWs_e";
+    const SUBMISSIONS_TABLE = "expert_meeting_submissions";
+
+    const SELECT_FIELDS = [
+      "id",
+      "created_at",
+      "expert",
+      "language",
+      "q1_asked",
+      "q1_answer",
+      "q2_asked",
+      "q2_answer",
+      "q3_asked",
+      "q3_answer",
+      "q4_asked",
+      "q4_answer",
+      "q5_asked",
+      "q5_answer",
+      "q6_asked",
+      "q6_answer",
+      "recommended_pathway",
+      "start_point",
+      "endpoint",
+      "main_clinical_steps",
+      "branches_variants",
+      "transfer_criteria",
+      "protocols_documents",
+      "document_timing",
+      "existing_data_sources",
+      "unresolved_questions",
+      "next_action",
+      "pathway_locked",
+      "boundaries_locked",
+      "map_ready",
+      "scope_sentence",
+      "parking_lot",
+      "action_points"
+    ].join(",");
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY,
+      {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      }
+    );
+
+    let allRows = [];
+    let currentSession = null;
+
+    const labels = {
+      q1_answer: "Q1 Pathway choice",
+      q2_answer: "Q2 Start point",
+      q3_answer: "Q3 Endpoint",
+      q4_answer: "Q4 Main clinical steps",
+      q5_answer: "Q5 Variants, branches, general hospital versus UMC",
+      q6_answer: "Q6 Documents, timing, validation contact",
+      recommended_pathway: "Recommended pathway",
+      start_point: "Start point",
+      endpoint: "Endpoint",
+      main_clinical_steps: "Main clinical steps",
+      branches_variants: "Branches or variants",
+      transfer_criteria: "General hospital versus UMC criteria",
+      protocols_documents: "Protocols or workflow documents",
+      document_timing: "When documents can be shared",
+      existing_data_sources: "Existing data sources",
+      unresolved_questions: "Unresolved questions",
+      next_action: "Next action",
+      pathway_locked: "Pathway locked?",
+      boundaries_locked: "Start and endpoint locked?",
+      map_ready: "Ready for first map?",
+      scope_sentence: "Scope sentence",
+      parking_lot: "Parking lot",
+      action_points: "Action points"
+    };
+
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    function formatDate(value, compact = false) {
+      if (!value) return "";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      return date.toLocaleString(undefined, compact ? { month: "short", day: "numeric" } : {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function text(value) {
+      if (value === null || value === undefined) return "";
+      return String(value).trim();
+    }
+
+    function booleanLabel(value) {
+      return value ? "asked" : "not marked";
+    }
+
+    function addText(parent, className, value) {
+      const element = document.createElement("div");
+      if (className) element.className = className;
+      element.textContent = value;
+      parent.appendChild(element);
+      return element;
+    }
+
+    function field(label, value, full = false) {
+      const clean = text(value);
+      if (!clean) return null;
+      const wrapper = document.createElement("div");
+      wrapper.className = full ? "field full" : "field";
+      addText(wrapper, "field-label", label);
+      addText(wrapper, "field-value", clean);
+      return wrapper;
+    }
+
+    function section(title, entries) {
+      const available = entries
+        .map(([label, value, full]) => field(label, value, full))
+        .filter(Boolean);
+      if (!available.length) return null;
+      const wrapper = document.createElement("div");
+      wrapper.className = "section";
+      const heading = document.createElement("h3");
+      heading.textContent = title;
+      wrapper.appendChild(heading);
+      const grid = document.createElement("div");
+      grid.className = "grid";
+      available.forEach(item => grid.appendChild(item));
+      wrapper.appendChild(grid);
+      return wrapper;
+    }
+
+    function rowMatches(row) {
+      const expert = byId("expert-filter").value;
+      const query = byId("search-input").value.trim().toLowerCase();
+      if (expert && row.expert !== expert) return false;
+      if (!query) return true;
+      return Object.values(row).some(value => text(value).toLowerCase().includes(query));
+    }
+
+    function filteredRows() {
+      return allRows.filter(rowMatches);
+    }
+
+    function renderSummary(rows) {
+      byId("total-count").textContent = rows.length;
+      byId("joost-count").textContent = rows.filter(row => row.expert === "Joost Boormans").length;
+      byId("peter-count").textContent = rows.filter(row => row.expert === "Peter Siersema").length;
+      byId("latest-date").textContent = rows.length ? formatDate(rows[0].created_at, true) : "-";
+    }
+
+    function renderRows() {
+      const list = byId("submissions-list");
+      const rows = filteredRows();
+      renderSummary(rows);
+      list.textContent = "";
+
+      if (!rows.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = allRows.length
+          ? "No submissions match the current filters."
+          : "No submissions returned. If records exist in Supabase, check the admin email and SELECT policy.";
+        list.appendChild(empty);
+        return;
+      }
+
+      rows.forEach(row => {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const header = document.createElement("div");
+        header.className = "card-header";
+        const titleBox = document.createElement("div");
+        const title = document.createElement("h2");
+        title.textContent = text(row.recommended_pathway) || "Untitled submission";
+        titleBox.appendChild(title);
+        const chips = document.createElement("div");
+        chips.className = "chips";
+        [row.expert, formatDate(row.created_at), row.language ? "lang: " + row.language : ""]
+          .filter(Boolean)
+          .forEach(value => addText(chips, "chip", value));
+        titleBox.appendChild(chips);
+        header.appendChild(titleBox);
+        addText(header, "chip", row.id ? "id: " + row.id.slice(0, 8) : "");
+        card.appendChild(header);
+
+        [
+          section("Core questions", [
+            [labels.q1_answer + " (" + booleanLabel(row.q1_asked) + ")", row.q1_answer, true],
+            [labels.q2_answer + " (" + booleanLabel(row.q2_asked) + ")", row.q2_answer, true],
+            [labels.q3_answer + " (" + booleanLabel(row.q3_asked) + ")", row.q3_answer, true],
+            [labels.q4_answer + " (" + booleanLabel(row.q4_asked) + ")", row.q4_answer, true],
+            [labels.q5_answer + " (" + booleanLabel(row.q5_asked) + ")", row.q5_answer, true],
+            [labels.q6_answer + " (" + booleanLabel(row.q6_asked) + ")", row.q6_answer, true]
+          ]),
+          section("Scoping note", [
+            [labels.recommended_pathway, row.recommended_pathway],
+            [labels.start_point, row.start_point],
+            [labels.endpoint, row.endpoint],
+            [labels.main_clinical_steps, row.main_clinical_steps, true],
+            [labels.branches_variants, row.branches_variants, true],
+            [labels.transfer_criteria, row.transfer_criteria, true],
+            [labels.protocols_documents, row.protocols_documents, true],
+            [labels.document_timing, row.document_timing, true],
+            [labels.existing_data_sources, row.existing_data_sources, true],
+            [labels.unresolved_questions, row.unresolved_questions, true],
+            [labels.next_action, row.next_action, true]
+          ]),
+          section("Final lock decisions", [
+            [labels.pathway_locked, row.pathway_locked],
+            [labels.boundaries_locked, row.boundaries_locked],
+            [labels.map_ready, row.map_ready]
+          ]),
+          section("Shared notes", [
+            [labels.scope_sentence, row.scope_sentence, true],
+            [labels.parking_lot, row.parking_lot, true],
+            [labels.action_points, row.action_points, true]
+          ])
+        ].filter(Boolean).forEach(item => card.appendChild(item));
+
+        list.appendChild(card);
+      });
+    }
+
+    async function loadRows() {
+      byId("load-status").textContent = "Loading submissions...";
+      const { data, error } = await supabaseClient
+        .from(SUBMISSIONS_TABLE)
+        .select(SELECT_FIELDS)
+        .order("created_at", { ascending: false })
+        .limit(200);
+
+      if (error) {
+        byId("load-status").textContent = "Could not load submissions: " + error.message;
+        allRows = [];
+      } else {
+        allRows = data || [];
+        byId("load-status").textContent = "Loaded " + allRows.length + " submission(s).";
+      }
+      renderRows();
+    }
+
+    async function refreshSession() {
+      const { data } = await supabaseClient.auth.getSession();
+      currentSession = data.session;
+      if (currentSession) {
+        byId("login-panel").classList.add("hidden");
+        byId("app-panel").classList.remove("hidden");
+        byId("session-line").textContent = "Signed in as " + (currentSession.user.email || "authenticated user") + ".";
+        await loadRows();
+      } else {
+        byId("login-panel").classList.remove("hidden");
+        byId("app-panel").classList.add("hidden");
+      }
+    }
+
+    async function sendMagicLink() {
+      const email = byId("email-input").value.trim();
+      if (!email) {
+        byId("login-status").textContent = "Enter your administrator email first.";
+        return;
+      }
+
+      byId("send-link-btn").disabled = true;
+      byId("login-status").textContent = "Sending magic link...";
+      const redirectUrl = window.location.href.split("#")[0].split("?")[0];
+      const { error } = await supabaseClient.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: redirectUrl
+        }
+      });
+
+      byId("send-link-btn").disabled = false;
+      byId("login-status").textContent = error
+        ? "Could not send link: " + error.message
+        : "Magic link sent. Open it from the same browser to view submissions.";
+    }
+
+    async function signOut() {
+      await supabaseClient.auth.signOut();
+      allRows = [];
+      await refreshSession();
+    }
+
+    function markdownForRows(rows) {
+      const lines = [
+        "# ECO-PATH expert meeting submissions",
+        "",
+        "Generated: " + new Date().toLocaleString(),
+        "Shown submissions: " + rows.length,
+        ""
+      ];
+
+      rows.forEach((row, index) => {
+        lines.push("## " + (index + 1) + ". " + (text(row.recommended_pathway) || "Untitled submission"));
+        lines.push("");
+        lines.push("- Expert: " + (text(row.expert) || "Not recorded"));
+        lines.push("- Submitted: " + (formatDate(row.created_at) || "Not recorded"));
+        lines.push("- Language: " + (text(row.language) || "Not recorded"));
+        lines.push("");
+
+        [
+          ["Core questions", [
+            ["Q1", row.q1_answer],
+            ["Q2", row.q2_answer],
+            ["Q3", row.q3_answer],
+            ["Q4", row.q4_answer],
+            ["Q5", row.q5_answer],
+            ["Q6", row.q6_answer]
+          ]],
+          ["Scoping note", [
+            [labels.recommended_pathway, row.recommended_pathway],
+            [labels.start_point, row.start_point],
+            [labels.endpoint, row.endpoint],
+            [labels.main_clinical_steps, row.main_clinical_steps],
+            [labels.branches_variants, row.branches_variants],
+            [labels.transfer_criteria, row.transfer_criteria],
+            [labels.protocols_documents, row.protocols_documents],
+            [labels.document_timing, row.document_timing],
+            [labels.existing_data_sources, row.existing_data_sources],
+            [labels.unresolved_questions, row.unresolved_questions],
+            [labels.next_action, row.next_action]
+          ]],
+          ["Final lock decisions", [
+            [labels.pathway_locked, row.pathway_locked],
+            [labels.boundaries_locked, row.boundaries_locked],
+            [labels.map_ready, row.map_ready]
+          ]]
+        ].forEach(([sectionTitle, entries]) => {
+          const filled = entries.filter(([, value]) => text(value));
+          if (!filled.length) return;
+          lines.push("### " + sectionTitle);
+          lines.push("");
+          filled.forEach(([label, value]) => {
+            lines.push("**" + label + "**");
+            lines.push("");
+            lines.push(text(value));
+            lines.push("");
+          });
+        });
+      });
+
+      return lines.join("\n");
+    }
+
+    function csvEscape(value) {
+      const clean = text(value).replace(/\r?\n/g, "\n");
+      return "\"" + clean.replace(/"/g, "\"\"") + "\"";
+    }
+
+    function csvForRows(rows) {
+      const columns = SELECT_FIELDS.split(",");
+      return [
+        columns.map(csvEscape).join(","),
+        ...rows.map(row => columns.map(column => csvEscape(row[column])).join(","))
+      ].join("\n");
+    }
+
+    function download(filename, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    byId("send-link-btn").addEventListener("click", sendMagicLink);
+    byId("email-input").addEventListener("keydown", event => {
+      if (event.key === "Enter") sendMagicLink();
+    });
+    byId("refresh-btn").addEventListener("click", loadRows);
+    byId("sign-out-btn").addEventListener("click", signOut);
+    byId("expert-filter").addEventListener("change", renderRows);
+    byId("search-input").addEventListener("input", renderRows);
+    byId("download-md-btn").addEventListener("click", () => {
+      download("eco-path-expert-meeting-submissions.md", markdownForRows(filteredRows()), "text/markdown;charset=utf-8");
+    });
+    byId("download-csv-btn").addEventListener("click", () => {
+      download("eco-path-expert-meeting-submissions.csv", csvForRows(filteredRows()), "text/csv;charset=utf-8");
+    });
+
+    supabaseClient.auth.onAuthStateChange(() => {
+      refreshSession();
+    });
+
+    refreshSession();
+  </script>
+</body>
+</html>
