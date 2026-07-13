@@ -1,0 +1,1294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ECO-PATH Expert Meeting Guide EN/NL/ZH</title>
+  <style>
+    :root {
+      --bg: #f7f8f5;
+      --panel: #ffffff;
+      --ink: #1f2a2e;
+      --muted: #607077;
+      --line: #d9e0dc;
+      --accent: #0f766e;
+      --accent-dark: #115e59;
+      --warn: #a16207;
+      --soft: #e8f3f1;
+      --soft-warn: #fff7df;
+      --shadow: 0 8px 22px rgba(28, 48, 45, 0.08);
+      --radius: 8px;
+      --mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.45;
+    }
+
+    body[data-lang="en"] .nl,
+    body[data-lang="en"] .zh,
+    body[data-lang="nl"] .en,
+    body[data-lang="nl"] .zh,
+    body[data-lang="zh"] .en,
+    body[data-lang="zh"] .nl { display: none !important; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(247, 248, 245, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    .topbar {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 2px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    button, .tab {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: var(--radius);
+      padding: 9px 12px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover, .tab:hover { border-color: var(--accent); }
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+    button.primary:hover { background: var(--accent-dark); }
+    button.active, .tab.active {
+      background: var(--soft);
+      border-color: var(--accent);
+      color: var(--accent-dark);
+      font-weight: 650;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(250px, 0.34fr) minmax(0, 0.66fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .panel h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .panel h3 {
+      font-size: 15px;
+      margin: 16px 0 8px;
+    }
+
+    .compact-list {
+      padding-left: 18px;
+      margin: 8px 0 0;
+    }
+
+    .compact-list li { margin: 5px 0; }
+
+    .agenda-item {
+      border-left: 4px solid var(--line);
+      padding: 8px 0 8px 10px;
+      margin: 8px 0;
+      background: #fbfcfa;
+    }
+
+    .agenda-item strong { display: block; }
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 8px;
+      margin: 3px 4px 3px 0;
+      color: var(--muted);
+      font-size: 12px;
+      background: #fbfcfa;
+    }
+
+    .warning {
+      background: var(--soft-warn);
+      border: 1px solid #f0d98c;
+      border-radius: var(--radius);
+      padding: 10px;
+      color: #5f4507;
+      margin-top: 12px;
+    }
+
+    .info {
+      background: var(--soft);
+      border: 1px solid #b9d8d4;
+      border-radius: var(--radius);
+      padding: 10px;
+      color: var(--accent-dark);
+      margin: 12px 0;
+      font-size: 13px;
+    }
+
+    .section {
+      margin-bottom: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--panel);
+    }
+
+    details.section > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 13px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #fbfcfa;
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+    }
+
+    details.section > summary::-webkit-details-marker { display: none; }
+    details.section > summary::after {
+      content: "+";
+      font-size: 20px;
+      color: var(--accent);
+    }
+    details.section[open] > summary::after { content: "-"; }
+
+    .section-body { padding: 14px; }
+    .prompt {
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid #edf1ee;
+    }
+    .prompt:last-child { border-bottom: 0; }
+
+    .prompt-status {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 6px;
+      padding-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .prompt-answer {
+      margin-top: 10px;
+    }
+
+    .prompt-answer textarea {
+      min-height: 58px;
+    }
+
+    input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      margin-top: 2px;
+      accent-color: var(--accent);
+    }
+
+    label {
+      display: block;
+      font-weight: 650;
+      margin-bottom: 5px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 3px 0 0;
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .field-full { grid-column: 1 / -1; }
+    input[type="text"], select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 9px 10px;
+      font: inherit;
+      color: var(--ink);
+      background: #fff;
+    }
+    textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+
+    .decision-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 140px;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #edf1ee;
+    }
+    .decision-row:last-child { border-bottom: 0; }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .matrix th,
+    .matrix td {
+      border: 1px solid var(--line);
+      padding: 8px;
+      vertical-align: top;
+      text-align: left;
+    }
+    .matrix th {
+      background: #f2f6f4;
+      font-weight: 700;
+    }
+
+    .expert { display: none; }
+    .expert.active { display: block; }
+
+    .export-box {
+      min-height: 220px;
+      font-family: var(--mono);
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+
+    .footer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .status-line {
+      min-height: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 860px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .controls { justify-content: flex-start; }
+      .grid { grid-template-columns: 1fr; }
+      .fields { grid-template-columns: 1fr; }
+      .decision-row { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      header, .tabs, .footer-actions, button { display: none !important; }
+      main { max-width: none; padding: 0; }
+      .grid { display: block; }
+      .panel, .section { box-shadow: none; break-inside: avoid; }
+      .expert { display: block !important; }
+      textarea { min-height: 70px; }
+    }
+  </style>
+</head>
+<body data-lang="en">
+  <header>
+    <div class="topbar">
+      <div>
+        <h1><span class="en">ECO-PATH Expert Meeting Guide</span><span class="nl">ECO-PATH expertmeeting leidraad</span><span class="zh">ECO-PATH 专家访谈引导表</span></h1>
+        <p class="subtitle en">Interactive facilitator sheet for Joost Boormans and Peter Siersema</p>
+        <p class="subtitle nl">Interactieve gespreksleidraad voor Joost Boormans en Peter Siersema</p>
+        <p class="subtitle zh">Joost Boormans 和 Peter Siersema 专家访谈引导表</p>
+      </div>
+      <div class="controls" aria-label="controls">
+        <button type="button" id="lang-en" class="active">English</button>
+        <button type="button" id="lang-nl">Nederlands</button>
+        <button type="button" id="lang-zh">中文</button>
+        <button type="button" id="print-btn"><span class="en">Print</span><span class="nl">Afdrukken</span><span class="zh">打印</span></button>
+        <button type="button" id="export-btn" class="primary"><span class="en">Export notes</span><span class="nl">Exporteer notities</span><span class="zh">导出记录</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="tabs" role="tablist" aria-label="expert selection">
+      <button type="button" class="tab active" data-expert="joost"><span class="en">Joost Boormans | Urology</span><span class="nl">Joost Boormans | Urologie</span><span class="zh">Joost Boormans | 泌尿外科</span></button>
+      <button type="button" class="tab" data-expert="peter"><span class="en">Peter Siersema | Gastroenterology</span><span class="nl">Peter Siersema | Gastro-enterologie</span><span class="zh">Peter Siersema | 消化内科</span></button>
+    </div>
+
+    <section class="grid">
+      <aside class="panel">
+        <h3 class="en">Required outputs</h3>
+        <h3 class="nl">Benodigde uitkomsten</h3>
+        <h3 class="zh">需要得到的结果</h3>
+        <ul class="compact-list en">
+          <li>One recommended first pathway.</li>
+          <li>One start point.</li>
+          <li>One endpoint.</li>
+          <li>Main clinical steps for the first map.</li>
+          <li>Key branches or variants to show.</li>
+          <li>Protocols, workflow documents, contacts, and next action.</li>
+        </ul>
+        <ul class="compact-list nl">
+          <li>Een aanbevolen eerste zorgpad.</li>
+          <li>Een startpunt.</li>
+          <li>Een eindpunt.</li>
+          <li>Belangrijkste klinische stappen voor de eerste kaart.</li>
+          <li>Belangrijke vertakkingen of varianten die zichtbaar moeten zijn.</li>
+          <li>Protocollen, werkdocumenten, contacten en vervolgactie.</li>
+        </ul>
+        <ul class="compact-list zh">
+          <li>一个推荐优先开展的 care pathway。</li>
+          <li>一个明确起点。</li>
+          <li>一个明确终点。</li>
+          <li>第一版 pathway map 必须包括的主要临床步骤。</li>
+          <li>必须呈现的关键分支或变体。</li>
+          <li>相关 protocol、workflow document、联系人和下一步行动。</li>
+        </ul>
+
+        <h3 class="en">Suggested 60-minute agenda</h3>
+        <h3 class="nl">Voorstel agenda van 60 minuten</h3>
+        <h3 class="zh">建议 60 分钟议程</h3>
+        <div class="agenda-item">
+          <strong class="en">0-5 min | Confirm purpose</strong>
+          <strong class="nl">0-5 min | Doel bevestigen</strong>
+          <strong class="zh">0-5 分钟 | 确认会议目的</strong>
+          <span class="en">Pathway scoping only, before protocol-to-activity mapping.</span>
+          <span class="nl">Alleen zorgpadafbakening, voorafgaand aan protocol-naar-activiteit-mapping.</span>
+          <span class="zh">本轮只做 pathway scoping，为后续 protocol-to-activity mapping 做准备。</span>
+        </div>
+        <div class="agenda-item">
+          <strong class="en">5-15 min | Pathway choice</strong>
+          <strong class="nl">5-15 min | Keuze van zorgpad</strong>
+          <strong class="zh">5-15 分钟 | 选择 pathway</strong>
+          <span class="en">Ask for one preferred first pathway.</span>
+          <span class="nl">Vraag om een voorkeurszorgpad voor de eerste versie.</span>
+          <span class="zh">请专家给出一个最适合第一版的 pathway。</span>
+        </div>
+        <div class="agenda-item">
+          <strong class="en">15-25 min | Start and endpoint</strong>
+          <strong class="nl">15-25 min | Start- en eindpunt</strong>
+          <strong class="zh">15-25 分钟 | 起点和终点</strong>
+          <span class="en">Lock one start point and one endpoint.</span>
+          <span class="nl">Leg een startpunt en een eindpunt vast.</span>
+          <span class="zh">锁定一个起点和一个终点。</span>
+        </div>
+        <div class="agenda-item">
+          <strong class="en">25-40 min | Steps and branches</strong>
+          <strong class="nl">25-40 min | Stappen en vertakkingen</strong>
+          <strong class="zh">25-40 分钟 | 主要步骤和分支</strong>
+          <span class="en">Confirm the main steps and branches that must appear on the first map.</span>
+          <span class="nl">Bevestig de belangrijkste stappen en vertakkingen die op de eerste kaart moeten staan.</span>
+          <span class="zh">确认第一版 map 必须出现的主要步骤和关键分支。</span>
+        </div>
+        <div class="agenda-item">
+          <strong class="en">40-50 min | Documents and contacts</strong>
+          <strong class="nl">40-50 min | Documenten en contacten</strong>
+          <strong class="zh">40-50 分钟 | 文件和联系人</strong>
+          <span class="en">Ask for protocols, workflow diagrams, and a validation contact.</span>
+          <span class="nl">Vraag naar protocollen, werkdiagrammen en een validatiecontact.</span>
+          <span class="zh">请专家指出 protocol、workflow diagram 和后续验证联系人。</span>
+        </div>
+        <div class="agenda-item">
+          <strong class="en">50-60 min | Lock the scoping note</strong>
+          <strong class="nl">50-60 min | Scoping note vastleggen</strong>
+          <strong class="zh">50-60 分钟 | 锁定 scoping note</strong>
+          <span class="en">Check whether the pathway can now be drawn as a first protocol-to-activity map.</span>
+          <span class="nl">Controleer of het zorgpad nu als eerste protocol-naar-activiteit-kaart kan worden getekend.</span>
+          <span class="zh">确认会后是否可以开始画第一版 protocol-to-activity map。</span>
+        </div>
+      </aside>
+
+      <section>
+        <article id="joost" class="expert active" data-expert-name="Joost Boormans">
+          <div class="panel">
+            <h2><span class="en">Joost Boormans | Urology</span><span class="nl">Joost Boormans | Urologie</span><span class="zh">Joost Boormans | 泌尿外科</span></h2>
+            <p class="en">Meeting aim: clarify the first urology pathway and define a manageable scope for the first protocol-to-activity map.</p>
+            <p class="nl">Doel van de meeting: het eerste urologische zorgpad verduidelijken en een hanteerbare scope bepalen voor de eerste protocol-naar-activiteit-kaart.</p>
+            <p class="zh">会议目标：明确第一条泌尿外科 pathway，并为第一版 protocol-to-activity map 定义一个可操作的范围。</p>
+            <span class="tag">MIBC</span>
+            <span class="tag">NMIBC surveillance</span>
+            <span class="tag"><span class="en">Organ-sparing oncology</span><span class="nl">Orgaansparende oncologie</span><span class="zh">保器官肿瘤治疗</span></span>
+            <span class="tag"><span class="en">Pathway scoping</span><span class="nl">Zorgpadafbakening</span><span class="zh">Pathway scoping</span></span>
+          </div>
+
+          <details class="section" open>
+            <summary><span class="en">Six required questions</span><span class="nl">Zes verplichte vragen</span><span class="zh">六个必问问题</span></summary>
+            <div class="section-body">
+              <div class="prompt">
+                <input type="checkbox" data-save="joost.core.q1">
+                <div>
+                  <label class="en">1. Pathway choice: What is the most suitable first urology pathway for ECO-PATH: localized MIBC treatment, NMIBC surveillance, or another bladder cancer pathway?</label>
+                  <label class="nl">1. Keuze van zorgpad: welk urologisch zorgpad is het meest geschikt als eerste ECO-PATH-casus: behandeling van gelokaliseerd MIBC, NMIBC-surveillance of een ander blaaskankerzorgpad?</label>
+                  <label class="zh">1. Pathway 选择：ECO-PATH 第一条泌尿外科 pathway 最适合做什么：局限性 MIBC 治疗、NMIBC surveillance，还是其他膀胱癌 pathway？</label>
+                  <p class="hint en">Ask for one preferred option and one reason. If the answer is "another pathway," ask for the exact pathway name.</p>
+                  <p class="hint nl">Vraag om een voorkeursoptie en een reden. Is het antwoord "een ander zorgpad", vraag dan naar de exacte naam van dat zorgpad.</p>
+                  <p class="hint zh">要求专家给出一个首选项和一个理由。如果回答是“其他 pathway”，继续追问具体 pathway 名称。</p>
+                </div>
+              </div>
+              <div class="prompt">
+                <input type="checkbox" data-save="joost.core.q2">
+                <div>
+                  <label class="en">2. Start point: Where should this pathway start in routine practice: referral, cystoscopy, TURBT, confirmed diagnosis, staging, MDT, or treatment decision?</label>
+                  <label class="nl">2. Startpunt: waar moet dit zorgpad in de routinepraktijk starten: verwijzing, cystoscopie, TURBT, bevestigde diagnose, stadiëring, MDO of behandelbesluit?</label>
+                  <label class="zh">2. 起点：这条 pathway 在常规实践中应从哪里开始：转诊、膀胱镜、TURBT、确诊、分期、MDT，还是治疗决策？</label>
+                  <p class="hint en">Do not accept "it depends" as the final answer. If it depends, ask which start point should be used for the first map.</p>
+                  <p class="hint nl">Accepteer "dat hangt ervan af" niet als eindantwoord. Als het ervan afhangt, vraag welk startpunt voor de eerste kaart moet worden gebruikt.</p>
+                  <p class="hint zh">不要把“看情况”作为最终答案。如果确实取决于情境，追问第一版 map 应该采用哪个起点。</p>
+                </div>
+              </div>
+              <div class="prompt">
+                <input type="checkbox" data-save="joost.core.q3">
+                <div>
+                  <label class="en">3. Endpoint: Where should the first version end: treatment decision, completion of primary treatment, discharge, first follow-up, or one-year follow-up?</label>
+                  <label class="nl">3. Eindpunt: waar moet de eerste versie eindigen: behandelbesluit, afronding van primaire behandeling, ontslag, eerste follow-up of follow-up na een jaar?</label>
+                  <label class="zh">3. 终点：第一版应在哪里结束：治疗决策、主要治疗完成、出院、第一次随访，还是一年随访？</label>
+                  <p class="hint en">Ask for one endpoint for the first version. Longer follow-up can be parked as a later extension.</p>
+                  <p class="hint nl">Vraag om een eindpunt voor de eerste versie. Langere follow-up kan als latere uitbreiding worden geparkeerd.</p>
+                  <p class="hint zh">要求专家为第一版给出一个终点。更长随访可以放到后续扩展。</p>
+                </div>
+              </div>
+              <div class="prompt">
+                <input type="checkbox" data-save="joost.core.q4">
+                <div>
+                  <label class="en">4. Main steps: Which clinical steps must be included in the first version?</label>
+                  <label class="nl">4. Belangrijkste stappen: welke klinische stappen moeten in de eerste versie worden opgenomen?</label>
+                  <label class="zh">4. 主要步骤：第一版必须包括哪些临床步骤？</label>
+                  <p class="hint en">Examples: consultation, cystoscopy, TURBT, pathology, imaging, MDT, surgery, radiotherapy, systemic therapy, ward stay, follow-up.</p>
+                  <p class="hint nl">Voorbeelden: consult, cystoscopie, TURBT, pathologie, beeldvorming, MDO, chirurgie, radiotherapie, systemische therapie, opname, follow-up.</p>
+                  <p class="hint zh">例子：门诊咨询、膀胱镜、TURBT、病理、影像、MDT、手术、放疗、系统治疗、住院、随访。</p>
+                </div>
+              </div>
+              <div class="prompt">
+                <input type="checkbox" data-save="joost.core.q5">
+                <div>
+                  <label class="en">5. Variants or branches: Which branches are clinically important and should be represented? Under what conditions can care stay in a general hospital, and when should it be referred or transferred to a UMC?</label>
+                  <label class="nl">5. Varianten of vertakkingen: welke vertakkingen zijn klinisch belangrijk en moeten zichtbaar zijn? In welke situaties kan zorg in een algemeen ziekenhuis plaatsvinden, en wanneer is verwijzing of overdracht naar een UMC nodig?</label>
+                  <label class="zh">5. 变体或分支：哪些临床重要分支必须在图中呈现？什么情况下可以在 general hospital 治疗，什么情况下需要转诊或转移到 UMC？</label>
+                  <p class="hint en">Examples: radical cystectomy, radiotherapy, bladder-sparing treatment, trimodality treatment, systemic therapy, surveillance.</p>
+                  <p class="hint nl">Voorbeelden: radicale cystectomie, radiotherapie, blaassparende behandeling, trimodale behandeling, systemische therapie, surveillance.</p>
+                  <p class="hint zh">例子：根治性膀胱切除、放疗、保膀胱治疗、三联疗法、系统治疗、surveillance。</p>
+                  <p class="hint en">Ask for concrete clinical or organizational triggers for general-hospital care versus UMC referral.</p>
+                  <p class="hint nl">Vraag naar concrete klinische of organisatorische criteria voor zorg in een algemeen ziekenhuis versus verwijzing naar een UMC.</p>
+                  <p class="hint zh">追问具体的临床或组织条件，不只记录医院名称。</p>
+                </div>
+              </div>
+              <div class="prompt">
+                <input type="checkbox" data-save="joost.core.q6">
+                <div>
+                  <label class="en">6. Documents and contacts: Which European, Dutch, and Erasmus MC protocols or workflow diagrams should we use, when can we receive them, and who can validate the pathway map later?</label>
+                  <label class="nl">6. Documenten en contacten: welke Europese, Nederlandse en Erasmus MC-protocollen of werkdiagrammen moeten we gebruiken, wanneer kunnen we ze ontvangen, en wie kan de zorgpadkaart later valideren?</label>
+                  <label class="zh">6. 文件和联系人：应使用哪些欧洲、荷兰和 Erasmus MC 的 protocol 或 workflow diagram？什么时候可以拿到这些文件？后续谁可以验证 pathway map？</label>
+                  <p class="hint en">Ask for document names, where to get them, when they can be shared, and a named colleague or PhD candidate for follow-up.</p>
+                  <p class="hint nl">Vraag naar documentnamen, waar ze te vinden zijn, wanneer ze gedeeld kunnen worden en een concrete collega of promovendus voor follow-up.</p>
+                  <p class="hint zh">请专家给出文件名称、获取位置、预计何时可以共享文件，以及一个具体的后续联系人或博士生。</p>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="section" open>
+            <summary><span class="en">One-page scoping note</span><span class="nl">Scoping note van een pagina</span><span class="zh">一页式 scoping note</span></summary>
+            <div class="section-body">
+              <div class="fields">
+                <div>
+                  <label class="en">Recommended pathway</label>
+                  <label class="nl">Aanbevolen zorgpad</label>
+                  <label class="zh">推荐 pathway</label>
+                  <input type="text" data-save="joost.note.pathway">
+                </div>
+                <div>
+                  <label class="en">Start point</label>
+                  <label class="nl">Startpunt</label>
+                  <label class="zh">起点</label>
+                  <input type="text" data-save="joost.note.start">
+                </div>
+                <div>
+                  <label class="en">Endpoint</label>
+                  <label class="nl">Eindpunt</label>
+                  <label class="zh">终点</label>
+                  <input type="text" data-save="joost.note.endpoint">
+                </div>
+                <div class="field-full">
+                  <label class="en">Main clinical steps</label>
+                  <label class="nl">Belangrijkste klinische stappen</label>
+                  <label class="zh">主要临床步骤</label>
+                  <textarea data-save="joost.note.steps"></textarea>
+                </div>
+                <div class="field-full">
+                  <label class="en">Key branches or variants</label>
+                  <label class="nl">Belangrijke vertakkingen of varianten</label>
+                  <label class="zh">关键分支或变体</label>
+                  <textarea data-save="joost.note.branches"></textarea>
+                </div>
+                <div class="field-full">
+                  <label class="en">General hospital versus UMC criteria</label>
+                  <label class="nl">Criteria algemeen ziekenhuis versus UMC</label>
+                  <label class="zh">General hospital vs UMC 条件</label>
+                  <textarea data-save="joost.note.transfer"></textarea>
+                </div>
+                <div class="field-full">
+                  <label class="en">Protocols or workflow documents</label>
+                  <label class="nl">Protocollen of werkdocumenten</label>
+                  <label class="zh">Protocol 或 workflow document</label>
+                  <textarea data-save="joost.note.documents"></textarea>
+                </div>
+                <div class="field-full">
+                  <label class="en">Existing data sources mentioned, only if volunteered</label>
+                  <label class="nl">Genoemde bestaande databronnen, alleen als de expert dit zelf noemt</label>
+                  <label class="zh">专家主动提到的现有数据来源</label>
+                  <textarea data-save="joost.note.data_sources"></textarea>
+                </div>
+                <div>
+                  <label class="en">Contact person</label>
+                  <label class="nl">Contactpersoon</label>
+                  <label class="zh">联系人</label>
+                  <input type="text" data-save="joost.note.contact">
+                </div>
+                <div>
+                  <label class="en">Backup contact</label>
+                  <label class="nl">Reservecontact</label>
+                  <label class="zh">备用联系人</label>
+                  <input type="text" data-save="joost.note.backup">
+                </div>
+                <div class="field-full">
+                  <label class="en">Unresolved questions</label>
+                  <label class="nl">Openstaande vragen</label>
+                  <label class="zh">未解决问题</label>
+                  <textarea data-save="joost.note.unresolved"></textarea>
+                </div>
+                <div class="field-full">
+                  <label class="en">Next action</label>
+                  <label class="nl">Vervolgactie</label>
+                  <label class="zh">下一步行动</label>
+                  <textarea data-save="joost.note.next_action"></textarea>
+                </div>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <article id="peter" class="expert" data-expert-name="Peter Siersema">
+          <div class="panel">
+            <h2><span class="en">Peter Siersema | Gastroenterology</span><span class="nl">Peter Siersema | Gastro-enterologie</span><span class="zh">Peter Siersema | 消化内科</span></h2>
+            <p class="en">Meeting aim: clarify the first gastroenterology pathway and define a manageable scope for the first protocol-to-activity map.</p>
+            <p class="nl">Doel van de meeting: het eerste gastro-enterologische zorgpad verduidelijken en een hanteerbare scope bepalen voor de eerste protocol-naar-activiteit-kaart.</p>
+            <p class="zh">会议目标：明确第一条消化内科 pathway，并为第一版 protocol-to-activity map 定义一个可操作的范围。</p>
+            <span class="tag"><span class="en">Colorectal cancer screening</span><span class="nl">Colorectale kankerscreening</span><span class="zh">结直肠癌筛查</span></span>
+            <span class="tag"><span class="en">Esophageal cancer</span><span class="nl">Slokdarmkanker</span><span class="zh">食管癌</span></span>
+            <span class="tag">Active surveillance</span>
+            <span class="tag"><span class="en">Pathway scoping</span><span class="nl">Zorgpadafbakening</span><span class="zh">Pathway scoping</span></span>
+          </div>
+
+          <details class="section" open>
+            <summary><span class="en">Six required questions</span><span class="nl">Zes verplichte vragen</span><span class="zh">六个必问问题</span></summary>
+            <div class="section-body">
+              <div class="prompt">
+                <input type="checkbox" data-save="peter.core.q1">
+                <div>
+                  <label class="en">1. Pathway choice: What is the most suitable first gastroenterology pathway for ECO-PATH: colorectal cancer screening, esophageal cancer active surveillance versus resection, or another GI oncology pathway?</label>
+                  <label class="nl">1. Keuze van zorgpad: welk gastro-enterologisch zorgpad is het meest geschikt als eerste ECO-PATH-casus: colorectale kankerscreening, actieve surveillance versus resectie bij slokdarmkanker of een ander GI-oncologisch zorgpad?</label>
+                  <label class="zh">1. Pathway 选择：ECO-PATH 第一条消化内科 pathway 最适合做什么：结直肠癌筛查、食管癌 active surveillance versus resection，还是其他 GI oncology pathway？</label>
+                  <p class="hint en">Ask for one preferred option and one reason. If the answer is "another pathway," ask for the exact pathway name.</p>
+                  <p class="hint nl">Vraag om een voorkeursoptie en een reden. Is het antwoord "een ander zorgpad", vraag dan naar de exacte naam van dat zorgpad.</p>
+                  <p class="hint zh">要求专家给出一个首选项和一个理由。如果回答是“其他 pathway”，继续追问具体 pathway 名称。</p>
+                </div>
+              </div>
+              <div class="prompt">
+                <input type="checkbox" data-save="peter.core.q2">
+                <div>
+                  <label class="en">2. Start point: Where should this pathway start in routine practice?</label>
+                  <label class="nl">2. Startpunt: waar moet dit zorgpad in de routinepraktijk starten?</label>
+                  <label class="zh">2. 起点：这条 pathway 在常规实践中应从哪里开始？</label>
+                  <p class="hint en">For CRC: positive FOBT/FIT, first hospital consultation, colonoscopy, or confirmed diagnosis. For esophageal cancer: post-chemoradiation response assessment, MDT, or treatment decision.</p>
+                  <p class="hint nl">Bij CRC: positieve FOBT/FIT, eerste ziekenhuisconsult, colonoscopie of bevestigde diagnose. Bij slokdarmkanker: responsbeoordeling na chemoradiatie, MDO of behandelbesluit.</p>
+                  <p class="hint zh">CRC 可选：阳性 FOBT/FIT、第一次医院咨询、结肠镜或确诊。食管癌可选：放化疗后 response assessment、MDT 或治疗决策。</p>
+                </div>
+              </div>
+              <div class="prompt">
+                <input type="checkbox" data-save="peter.core.q3">
+                <div>
+                  <label class="en">3. Endpoint: Where should the first version end: colonoscopy result, diagnosis, treatment decision, initial treatment, surgery, or follow-up?</label>
+                  <label class="nl">3. Eindpunt: waar moet de eerste versie eindigen: colonoscopieresultaat, diagnose, behandelbesluit, initiële behandeling, chirurgie of follow-up?</label>
+                  <label class="zh">3. 终点：第一版应在哪里结束：结肠镜结果、诊断、治疗决策、初始治疗、手术，还是随访？</label>
+                  <p class="hint en">Ask for one endpoint for the first version. Longer follow-up can be parked as a later extension.</p>
+                  <p class="hint nl">Vraag om een eindpunt voor de eerste versie. Langere follow-up kan als latere uitbreiding worden geparkeerd.</p>
+                  <p class="hint zh">要求专家为第一版给出一个终点。更长随访可以放到后续扩展。</p>
+                </div>
+              </div>
+              <div class="prompt">
+                <input type="checkbox" data-save="peter.core.q4">
+                <div>
+                  <label class="en">4. Main steps: Which clinical steps must be included in the first version?</label>
+                  <label class="nl">4. Belangrijkste stappen: welke klinische stappen moeten in de eerste versie worden opgenomen?</label>
+                  <label class="zh">4. 主要步骤：第一版必须包括哪些临床步骤？</label>
+                  <p class="hint en">Examples: consultation, endoscopy, biopsy, pathology, imaging, MDT, surgery, chemoradiation, active surveillance, follow-up.</p>
+                  <p class="hint nl">Voorbeelden: consult, endoscopie, biopt, pathologie, beeldvorming, MDO, chirurgie, chemoradiatie, actieve surveillance, follow-up.</p>
+                  <p class="hint zh">例子：门诊咨询、内镜、活检、病理、影像、MDT、手术、放化疗、active surveillance、随访。</p>
+                </div>
+              </div>
+              <div class="prompt">
+                <input type="checkbox" data-save="peter.core.q5">
+                <div>
+                  <label class="en">5. Variants or branches: Which branches are clinically important and should be represented? Under what conditions can care stay in a general hospital, and when should it be referred or transferred to a UMC?</label>
+                  <label class="nl">5. Varianten of vertakkingen: welke vertakkingen zijn klinisch belangrijk en moeten zichtbaar zijn? In welke situaties kan zorg in een algemeen ziekenhuis plaatsvinden, en wanneer is verwijzing of overdracht naar een UMC nodig?</label>
+                  <label class="zh">5. 变体或分支：哪些临床重要分支必须在图中呈现？什么情况下可以在 general hospital 治疗，什么情况下需要转诊或转移到 UMC？</label>
+                  <p class="hint en">Examples: no cancer, early cancer, advanced cancer, endoscopic treatment, surgery, active surveillance, resection.</p>
+                  <p class="hint nl">Voorbeelden: geen kanker, vroege kanker, gevorderde kanker, endoscopische behandeling, chirurgie, actieve surveillance, resectie.</p>
+                  <p class="hint zh">例子：无癌、早期癌、进展期癌、内镜治疗、手术、active surveillance、切除。</p>
+                  <p class="hint en">Ask for concrete clinical or organizational triggers for general-hospital care versus UMC referral.</p>
+                  <p class="hint nl">Vraag naar concrete klinische of organisatorische criteria voor zorg in een algemeen ziekenhuis versus verwijzing naar een UMC.</p>
+                  <p class="hint zh">追问具体的临床或组织条件，不只记录医院名称。</p>
+                </div>
+              </div>
+              <div class="prompt">
+                <input type="checkbox" data-save="peter.core.q6">
+                <div>
+                  <label class="en">6. Documents and contacts: Which European, Dutch, Erasmus MC, SANO-related, or local workflow documents should we use, when can we receive them, and who can validate the pathway map later?</label>
+                  <label class="nl">6. Documenten en contacten: welke Europese, Nederlandse, Erasmus MC-, SANO-gerelateerde of lokale werkdocumenten moeten we gebruiken, wanneer kunnen we ze ontvangen, en wie kan de zorgpadkaart later valideren?</label>
+                  <label class="zh">6. 文件和联系人：应使用哪些欧洲、荷兰、Erasmus MC、SANO 相关或本地 workflow document？什么时候可以拿到这些文件？后续谁可以验证 pathway map？</label>
+                  <p class="hint en">Ask for document names, where to get them, when they can be shared, and a named colleague or PhD candidate for follow-up.</p>
+                  <p class="hint nl">Vraag naar documentnamen, waar ze te vinden zijn, wanneer ze gedeeld kunnen worden en een concrete collega of promovendus voor follow-up.</p>
+                  <p class="hint zh">请专家给出文件名称、获取位置、预计何时可以共享文件，以及一个具体的后续联系人或博士生。</p>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="section" open>
+            <summary><span class="en">One-page scoping note</span><span class="nl">Scoping note van een pagina</span><span class="zh">一页式 scoping note</span></summary>
+            <div class="section-body">
+              <div class="fields">
+                <div>
+                  <label class="en">Recommended pathway</label>
+                  <label class="nl">Aanbevolen zorgpad</label>
+                  <label class="zh">推荐 pathway</label>
+                  <input type="text" data-save="peter.note.pathway">
+                </div>
+                <div>
+                  <label class="en">Start point</label>
+                  <label class="nl">Startpunt</label>
+                  <label class="zh">起点</label>
+                  <input type="text" data-save="peter.note.start">
+                </div>
+                <div>
+                  <label class="en">Endpoint</label>
+                  <label class="nl">Eindpunt</label>
+                  <label class="zh">终点</label>
+                  <input type="text" data-save="peter.note.endpoint">
+                </div>
+                <div class="field-full">
+                  <label class="en">Main clinical steps</label>
+                  <label class="nl">Belangrijkste klinische stappen</label>
+                  <label class="zh">主要临床步骤</label>
+                  <textarea data-save="peter.note.steps"></textarea>
+                </div>
+                <div class="field-full">
+                  <label class="en">Key branches or variants</label>
+                  <label class="nl">Belangrijke vertakkingen of varianten</label>
+                  <label class="zh">关键分支或变体</label>
+                  <textarea data-save="peter.note.branches"></textarea>
+                </div>
+                <div class="field-full">
+                  <label class="en">General hospital versus UMC criteria</label>
+                  <label class="nl">Criteria algemeen ziekenhuis versus UMC</label>
+                  <label class="zh">General hospital vs UMC 条件</label>
+                  <textarea data-save="peter.note.transfer"></textarea>
+                </div>
+                <div class="field-full">
+                  <label class="en">Protocols or workflow documents</label>
+                  <label class="nl">Protocollen of werkdocumenten</label>
+                  <label class="zh">Protocol 或 workflow document</label>
+                  <textarea data-save="peter.note.documents"></textarea>
+                </div>
+                <div class="field-full">
+                  <label class="en">Existing data sources mentioned, only if volunteered</label>
+                  <label class="nl">Genoemde bestaande databronnen, alleen als de expert dit zelf noemt</label>
+                  <label class="zh">专家主动提到的现有数据来源</label>
+                  <textarea data-save="peter.note.data_sources"></textarea>
+                </div>
+                <div>
+                  <label class="en">Contact person</label>
+                  <label class="nl">Contactpersoon</label>
+                  <label class="zh">联系人</label>
+                  <input type="text" data-save="peter.note.contact">
+                </div>
+                <div>
+                  <label class="en">Backup contact</label>
+                  <label class="nl">Reservecontact</label>
+                  <label class="zh">备用联系人</label>
+                  <input type="text" data-save="peter.note.backup">
+                </div>
+                <div class="field-full">
+                  <label class="en">Unresolved questions</label>
+                  <label class="nl">Openstaande vragen</label>
+                  <label class="zh">未解决问题</label>
+                  <textarea data-save="peter.note.unresolved"></textarea>
+                </div>
+                <div class="field-full">
+                  <label class="en">Next action</label>
+                  <label class="nl">Vervolgactie</label>
+                  <label class="zh">下一步行动</label>
+                  <textarea data-save="peter.note.next_action"></textarea>
+                </div>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <details class="section" open>
+          <summary><span class="en">Final lock before closing the meeting</span><span class="nl">Eindcontrole voor afsluiting van de meeting</span><span class="zh">会议结束前最终确认</span></summary>
+          <div class="section-body">
+            <div class="decision-row">
+              <label class="en">Did the expert give one recommended first pathway?</label>
+              <label class="nl">Heeft de expert een aanbevolen eerste zorgpad gegeven?</label>
+              <label class="zh">专家是否给出了一个推荐的第一条 pathway？</label>
+              <select data-save="shared.pathway_locked">
+                <option value=""></option>
+                <option value="Yes" data-en="Yes" data-nl="Ja" data-zh="是">Yes</option>
+                <option value="Partly" data-en="Partly" data-nl="Deels" data-zh="部分明确">Partly</option>
+                <option value="No" data-en="No" data-nl="Nee" data-zh="否">No</option>
+              </select>
+            </div>
+            <div class="decision-row">
+              <label class="en">Are the start point and endpoint clear enough for a first map?</label>
+              <label class="nl">Zijn startpunt en eindpunt duidelijk genoeg voor een eerste kaart?</label>
+              <label class="zh">起点和终点是否已经清楚到足以画第一版 map？</label>
+              <select data-save="shared.boundaries_locked">
+                <option value=""></option>
+                <option value="Yes" data-en="Yes" data-nl="Ja" data-zh="是">Yes</option>
+                <option value="Partly" data-en="Partly" data-nl="Deels" data-zh="部分明确">Partly</option>
+                <option value="No" data-en="No" data-nl="Nee" data-zh="否">No</option>
+              </select>
+            </div>
+            <div class="decision-row">
+              <label class="en">Can Justin prepare a first protocol-to-activity map after this meeting?</label>
+              <label class="nl">Kan Justin na deze meeting een eerste protocol-naar-activiteit-kaart maken?</label>
+              <label class="zh">Justin 会后是否可以准备第一版 protocol-to-activity map？</label>
+              <select data-save="shared.map_ready">
+                <option value=""></option>
+                <option value="Yes" data-en="Yes" data-nl="Ja" data-zh="是">Yes</option>
+                <option value="Yes, after receiving documents" data-en="Yes, after receiving documents" data-nl="Ja, na ontvangst van documenten" data-zh="可以，但需先收到文件">Yes, after receiving documents</option>
+                <option value="Not yet" data-en="Not yet" data-nl="Nog niet" data-zh="还不可以">Not yet</option>
+              </select>
+            </div>
+            <div class="fields">
+              <div class="field-full">
+                <label class="en">One-sentence confirmed scope</label>
+                <label class="nl">Bevestigde scope in een zin</label>
+                <label class="zh">一句话确认 scope</label>
+                <textarea data-save="shared.scope_sentence"></textarea>
+              </div>
+              <div class="field-full">
+                <label class="en">Parking lot</label>
+                <label class="nl">Parkeerplaats</label>
+                <label class="zh">暂存问题</label>
+                <textarea data-save="shared.parking"></textarea>
+              </div>
+              <div class="field-full">
+                <label class="en">Action points</label>
+                <label class="nl">Actiepunten</label>
+                <label class="zh">行动点</label>
+                <textarea data-save="shared.actions"></textarea>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <div class="panel">
+          <h2 class="en">Exported meeting notes</h2>
+          <h2 class="nl">Geexporteerde vergadernotities</h2>
+          <h2 class="zh">导出的会议记录</h2>
+          <div class="info">
+            <span class="en">Offline file: filled answers are saved only in this browser. They do not automatically sync to the original HTML file or to other users. Use Export notes or Download filled HTML to share them.</span>
+            <span class="nl">Offline bestand: ingevulde antwoorden worden alleen in deze browser opgeslagen. Ze synchroniseren niet automatisch met het originele HTML-bestand of met andere gebruikers. Gebruik Exporteer notities of Download ingevulde HTML om ze te delen.</span>
+            <span class="zh">离线文件：填写内容只保存在当前浏览器中，不会自动同步回原始 HTML 文件，也不会同步给其他用户。需要分享时，请使用“导出记录”或“下载已填写 HTML”。</span>
+          </div>
+          <textarea id="export-output" class="export-box" readonly></textarea>
+          <div class="footer-actions">
+            <button type="button" id="copy-btn"><span class="en">Copy export</span><span class="nl">Kopieer export</span><span class="zh">复制导出内容</span></button>
+            <button type="button" id="download-btn"><span class="en">Download .md</span><span class="nl">Download .md</span><span class="zh">下载 .md</span></button>
+            <button type="button" id="download-html-btn"><span class="en">Download filled HTML</span><span class="nl">Download ingevulde HTML</span><span class="zh">下载已填写 HTML</span></button>
+            <button type="button" id="reset-btn"><span class="en">Reset saved fields</span><span class="nl">Wis opgeslagen velden</span><span class="zh">清空已保存内容</span></button>
+          </div>
+          <div id="export-status" class="status-line" role="status" aria-live="polite"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_PREFIX = "ecopath.expert_meeting.";
+
+    function uiText(en, nl, zh) {
+      const lang = document.body.dataset.lang;
+      if (lang === "zh") return zh || en;
+      if (lang === "nl") return nl || en;
+      return en;
+    }
+
+    function showStatus(en, nl, zh) {
+      const status = document.getElementById("export-status");
+      if (status) status.textContent = uiText(en, nl, zh);
+    }
+
+    function localizeOptions() {
+      const lang = document.body.dataset.lang || "en";
+      document.querySelectorAll("option[data-en]").forEach(option => {
+        option.textContent = option.dataset[lang] || option.dataset.en;
+      });
+    }
+
+    function safeSet(key, value) {
+      try {
+        localStorage.setItem(key, value);
+        return true;
+      } catch (error) {
+        return false;
+      }
+    }
+
+    function safeGet(key) {
+      try {
+        return localStorage.getItem(key);
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function safeStorageKeys() {
+      try {
+        return Object.keys(localStorage);
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function safeRemovePrefix(prefix) {
+      safeStorageKeys().forEach(key => {
+        if (key.startsWith(prefix)) {
+          try {
+            localStorage.removeItem(key);
+          } catch (error) {
+            // Continue clearing what the browser allows.
+          }
+        }
+      });
+    }
+
+    function hydratePrompts() {
+      document.querySelectorAll(".prompt").forEach(prompt => {
+        const checkbox = prompt.querySelector("input[type='checkbox'][data-save]");
+        if (!checkbox) return;
+
+        if (!checkbox.closest(".prompt-status")) {
+          const status = document.createElement("label");
+          status.className = "prompt-status";
+          checkbox.replaceWith(status);
+          status.appendChild(checkbox);
+
+          const en = document.createElement("span");
+          en.className = "en";
+          en.textContent = "Asked";
+          const nl = document.createElement("span");
+          nl.className = "nl";
+          nl.textContent = "Gevraagd";
+          const zh = document.createElement("span");
+          zh.className = "zh";
+          zh.textContent = "已询问";
+          status.appendChild(en);
+          status.appendChild(nl);
+          status.appendChild(zh);
+        }
+
+        const content = Array.from(prompt.children).find(child => child.tagName === "DIV");
+        if (!content || content.querySelector(".prompt-answer")) return;
+
+        const answer = document.createElement("div");
+        answer.className = "prompt-answer";
+
+        const labelEn = document.createElement("label");
+        labelEn.className = "en";
+        labelEn.textContent = "Clear expert answer / decision required";
+        const labelNl = document.createElement("label");
+        labelNl.className = "nl";
+        labelNl.textContent = "Duidelijk antwoord / besluit van de expert verplicht";
+        const labelZh = document.createElement("label");
+        labelZh.className = "zh";
+        labelZh.textContent = "必须记录专家的明确回答 / 决定";
+        const textarea = document.createElement("textarea");
+        textarea.dataset.save = checkbox.dataset.save + ".note";
+
+        answer.appendChild(labelEn);
+        answer.appendChild(labelNl);
+        answer.appendChild(labelZh);
+        answer.appendChild(textarea);
+        content.appendChild(answer);
+      });
+    }
+
+    function setLanguage(lang) {
+      document.body.dataset.lang = lang;
+      document.documentElement.lang = lang;
+      document.getElementById("lang-en").classList.toggle("active", lang === "en");
+      document.getElementById("lang-nl").classList.toggle("active", lang === "nl");
+      document.getElementById("lang-zh").classList.toggle("active", lang === "zh");
+      localizeOptions();
+      safeSet(STORAGE_PREFIX + "language", lang);
+    }
+
+    function setExpert(expertId) {
+      document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.expert === expertId);
+      });
+      document.querySelectorAll(".expert").forEach(expert => {
+        expert.classList.toggle("active", expert.id === expertId);
+      });
+      safeSet(STORAGE_PREFIX + "expert", expertId);
+      restoreSharedFields();
+    }
+
+    function currentExpertId() {
+      const active = document.querySelector(".tab.active");
+      return active ? active.dataset.expert : "joost";
+    }
+
+    function storageKeyFor(element) {
+      const key = element.dataset.save;
+      if (key && key.startsWith("shared.")) {
+        return STORAGE_PREFIX + currentExpertId() + "." + key;
+      }
+      return STORAGE_PREFIX + key;
+    }
+
+    function saveField(element) {
+      if (!element.dataset.save) return;
+      const value = element.type === "checkbox" ? String(element.checked) : element.value;
+      safeSet(storageKeyFor(element), value);
+    }
+
+    function restoreFields() {
+      document.querySelectorAll("[data-save]").forEach(element => {
+        if (element.dataset.save.startsWith("shared.")) return;
+        const key = storageKeyFor(element);
+        const saved = safeGet(key);
+        if (saved === null) return;
+        if (element.type === "checkbox") {
+          element.checked = saved === "true";
+        } else {
+          element.value = saved;
+        }
+      });
+    }
+
+    function restoreSharedFields() {
+      document.querySelectorAll("[data-save^='shared.']").forEach(element => {
+        const saved = safeGet(storageKeyFor(element));
+        if (element.type === "checkbox") {
+          element.checked = saved === "true";
+        } else {
+          element.value = saved === null ? "" : saved;
+        }
+      });
+    }
+
+    function labelFor(element) {
+      const prompt = element.closest(".prompt");
+      if (prompt) {
+        const lang = document.body.dataset.lang || "en";
+        const question = prompt.querySelector("label." + lang);
+        const text = question ? question.textContent.trim() : element.dataset.save;
+        return element.type === "checkbox" ? text : text + " - " + uiText("answer", "antwoord", "答案");
+      }
+
+      const container = element.closest(".prompt, .decision-row, div, td");
+      if (!container) return element.dataset.save;
+      const lang = document.body.dataset.lang || "en";
+      const row = element.closest("tr");
+      if (row) {
+        const cells = Array.from(row.children).filter(cell => getComputedStyle(cell).display !== "none");
+        const item = cells[0] ? cells[0].textContent.trim() : "";
+        const question = cells[1] ? cells[1].textContent.trim() : "";
+        return [item, question].filter(Boolean).join(": ");
+      }
+      const preferred = container.querySelector("label." + lang);
+      const anyLabel = container.querySelector("label");
+      if (preferred) return preferred.textContent.trim();
+      if (anyLabel) return anyLabel.textContent.trim();
+      return element.dataset.save;
+    }
+
+    function fieldValue(element) {
+      if (element.type === "checkbox") return element.checked ? uiText("yes", "ja", "是") : "";
+      if (element.tagName === "SELECT") {
+        const selected = element.selectedOptions && element.selectedOptions[0];
+        return selected ? selected.textContent.trim() : "";
+      }
+      return element.value.trim();
+    }
+
+    function activeExpertName() {
+      const active = document.querySelector(".expert.active");
+      return active ? active.dataset.expertName : "";
+    }
+
+    function buildExport() {
+      const lang = document.body.dataset.lang || "en";
+      const active = document.querySelector(".expert.active");
+      const expertName = activeExpertName();
+      const date = new Date().toISOString().slice(0, 10);
+      const lines = [];
+      const langName = lang === "zh" ? "中文" : (lang === "nl" ? "Nederlands" : "English");
+      lines.push(uiText("# ECO-PATH expert meeting notes", "# ECO-PATH expertmeeting notities", "# ECO-PATH 专家访谈记录"));
+      lines.push("");
+      lines.push(uiText("- Date: ", "- Datum: ", "- 日期：") + date);
+      lines.push(uiText("- Expert: ", "- Expert: ", "- 专家：") + expertName);
+      lines.push(uiText("- Language view: ", "- Taalweergave: ", "- 语言视图：") + langName);
+      lines.push("");
+      lines.push(uiText("## Asked prompts", "## Gevraagde prompts", "## 已询问的问题"));
+      const checked = active.querySelectorAll("input[type='checkbox'][data-save]:checked");
+      if (checked.length === 0) {
+        lines.push(uiText("- None marked yet.", "- Nog niets gemarkeerd.", "- 尚未标记。"));
+      } else {
+        checked.forEach(item => lines.push("- " + labelFor(item)));
+      }
+      lines.push("");
+      lines.push(uiText("## Captured fields", "## Vastgelegde velden", "## 已记录字段"));
+      const activeFields = Array.from(active.querySelectorAll("input[type='text'][data-save], select[data-save], textarea[data-save]"));
+      const sharedFields = Array.from(document.querySelectorAll("[data-save^='shared.']"));
+      activeFields.concat(sharedFields).forEach(item => {
+        const value = fieldValue(item);
+        if (!value) return;
+        lines.push("### " + labelFor(item));
+        lines.push(value);
+        lines.push("");
+      });
+      return lines.join("\n");
+    }
+
+    function exportNotes() {
+      const output = document.getElementById("export-output");
+      output.value = buildExport();
+      output.focus();
+      output.select();
+      output.scrollIntoView({ behavior: "smooth", block: "center" });
+      showStatus(
+        "Export created below. The text is selected for manual copying if download or clipboard is blocked.",
+        "Export hieronder aangemaakt. De tekst is geselecteerd voor handmatig kopieren als download of klembord wordt geblokkeerd.",
+        "导出内容已生成在下方。如果下载或剪贴板被拦截，文本已被选中，可手动复制。"
+      );
+      return output.value;
+    }
+
+    function downloadBlob(text, filename, type) {
+      const expert = activeExpertName().toLowerCase().replace(/\s+/g, "-");
+      const blob = new Blob([text], { type });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename.replace("{expert}", expert);
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        link.remove();
+      }, 1000);
+    }
+
+    function downloadMarkdown() {
+      const text = exportNotes();
+      downloadBlob(text, "ecopath-expert-meeting-{expert}.md", "text/markdown;charset=utf-8");
+      showStatus(
+        "Markdown download started. If no file appears, use Copy export or copy the selected text below.",
+        "Markdown-download gestart. Als er geen bestand verschijnt, gebruik Kopieer export of kopieer de geselecteerde tekst hieronder.",
+        "Markdown 下载已启动。如果没有文件出现，请使用“复制导出内容”，或复制下方已选中的文本。"
+      );
+    }
+
+    function collectPortableState() {
+      const state = {};
+      const sharedKeys = Array.from(document.querySelectorAll("[data-save^='shared.']")).map(element => element.dataset.save);
+
+      document.querySelectorAll("[data-save]").forEach(element => {
+        saveField(element);
+        state[storageKeyFor(element).slice(STORAGE_PREFIX.length)] = element.type === "checkbox" ? String(element.checked) : element.value;
+      });
+
+      ["language", "expert"].forEach(key => {
+        const value = safeGet(STORAGE_PREFIX + key);
+        if (value !== null) state[key] = value;
+      });
+
+      ["joost", "peter"].forEach(expert => {
+        sharedKeys.forEach(sharedKey => {
+          const key = expert + "." + sharedKey;
+          const value = safeGet(STORAGE_PREFIX + key);
+          if (value !== null) state[key] = value;
+        });
+      });
+
+      return state;
+    }
+
+    function applyPortableState(state) {
+      Object.keys(state || {}).forEach(key => {
+        safeSet(STORAGE_PREFIX + key, state[key]);
+      });
+    }
+
+    function importEmbeddedPrefill() {
+      const payload = window.ECOPATH_PREFILL;
+      if (!payload || !payload.id || !payload.state) return;
+
+      const importKey = STORAGE_PREFIX + "embedded_import_id";
+      if (safeGet(importKey) === payload.id) return;
+
+      applyPortableState(payload.state);
+      safeSet(importKey, payload.id);
+    }
+
+    function downloadFilledHtml() {
+      const payload = {
+        id: "ecopath-" + Date.now(),
+        createdAt: new Date().toISOString(),
+        state: collectPortableState()
+      };
+
+      const json = JSON.stringify(payload).replace(/</g, "\\u003c");
+      const prefill = "  <script id=\"ecopath-prefill-data\">window.ECOPATH_PREFILL = " + json + ";</" + "script>\n";
+      let html = "<!doctype html>\n" + document.documentElement.outerHTML;
+      html = html.replace(/\s*<script id="ecopath-prefill-data">[\s\S]*?<\/script>\s*/g, "\n");
+      if (html.includes("  <script>\n    const STORAGE_PREFIX")) {
+        html = html.replace("  <script>\n    const STORAGE_PREFIX", prefill + "  <script>\n    const STORAGE_PREFIX");
+      } else {
+        html = html.replace("</body>", prefill + "</body>");
+      }
+
+      downloadBlob(html, "ecopath-expert-meeting-{expert}-filled.html", "text/html;charset=utf-8");
+      showStatus(
+        "Filled HTML downloaded. This file can be opened on another computer with the captured notes embedded.",
+        "Ingevulde HTML gedownload. Dit bestand kan op een andere computer worden geopend met de notities erin opgeslagen.",
+        "已下载填写后的 HTML。该文件可在另一台电脑打开，并保留已记录内容。"
+      );
+    }
+
+    function resetSavedFields() {
+      if (!confirm(uiText("Clear all saved fields in this meeting guide?", "Alle opgeslagen velden in deze gespreksleidraad wissen?", "清空这份访谈引导表中的所有已保存内容？"))) return;
+      safeRemovePrefix(STORAGE_PREFIX);
+      document.querySelectorAll("[data-save]").forEach(element => {
+        if (element.type === "checkbox") element.checked = false;
+        else element.value = "";
+      });
+      document.getElementById("export-output").value = "";
+      showStatus("Saved fields cleared.", "Opgeslagen velden gewist.", "已清空保存内容。");
+      setLanguage("en");
+      setExpert("joost");
+    }
+
+    hydratePrompts();
+    importEmbeddedPrefill();
+
+    document.getElementById("lang-en").addEventListener("click", () => setLanguage("en"));
+    document.getElementById("lang-nl").addEventListener("click", () => setLanguage("nl"));
+    document.getElementById("lang-zh").addEventListener("click", () => setLanguage("zh"));
+    document.getElementById("print-btn").addEventListener("click", () => window.print());
+    document.getElementById("export-btn").addEventListener("click", exportNotes);
+    document.getElementById("download-btn").addEventListener("click", downloadMarkdown);
+    document.getElementById("download-html-btn").addEventListener("click", downloadFilledHtml);
+    document.getElementById("reset-btn").addEventListener("click", resetSavedFields);
+    document.getElementById("copy-btn").addEventListener("click", async () => {
+      const text = exportNotes();
+      const output = document.getElementById("export-output");
+      try {
+        if (!navigator.clipboard) throw new Error("Clipboard API unavailable");
+        await navigator.clipboard.writeText(text);
+        showStatus("Export copied to clipboard.", "Export gekopieerd naar het klembord.", "导出内容已复制到剪贴板。");
+      } catch (error) {
+        output.focus();
+        output.select();
+        try {
+          document.execCommand("copy");
+          showStatus("Export selected and copied using browser fallback.", "Export geselecteerd en gekopieerd met browserfallback.", "已使用浏览器备用方式选择并复制导出内容。");
+        } catch (copyError) {
+          showStatus("Clipboard was blocked. The export text is selected so you can copy it manually.", "Klembord geblokkeerd. De exporttekst is geselecteerd zodat u deze handmatig kunt kopieren.", "剪贴板被拦截。导出文本已被选中，可手动复制。");
+        }
+      }
+    });
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => setExpert(tab.dataset.expert));
+    });
+    document.querySelectorAll("[data-save]").forEach(element => {
+      element.addEventListener("input", () => saveField(element));
+      element.addEventListener("change", () => saveField(element));
+    });
+
+    setLanguage(safeGet(STORAGE_PREFIX + "language") || "en");
+    setExpert(safeGet(STORAGE_PREFIX + "expert") || "joost");
+    restoreFields();
+    restoreSharedFields();
+  </script>
+</body>
+</html>

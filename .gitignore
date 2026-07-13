@@ -1,0 +1,26 @@
+.DS_Store
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Local/editor files
+.idea/
+.vscode/
+
+# Accidental data drops
+data/
+raw/
+processed/
+external/
+*.xlsx
+*.xls
+*.csv
+*.tsv
+*.sav
+*.rds
+
+# Local development artifacts
+node_modules/
+dist/
+build/
