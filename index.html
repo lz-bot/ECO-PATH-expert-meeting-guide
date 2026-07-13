@@ -1237,9 +1237,9 @@
         await viewSubmissions();
       } catch (error) {
         showStatus(
-          "Submission failed. Check that the Supabase table and policies exist. Details: " + error.message.slice(0, 220),
-          "Indienen mislukt. Controleer of de Supabase-tabel en policies bestaan. Details: " + error.message.slice(0, 220),
-          "提交失败。请确认 Supabase 表和权限策略已经创建。详情：" + error.message.slice(0, 220)
+          "Submission failed. Check that the Supabase table, grants, and policies exist. Details: " + error.message.slice(0, 220),
+          "Indienen mislukt. Controleer of de Supabase-tabel, grants en policies bestaan. Details: " + error.message.slice(0, 220),
+          "提交失败。请确认 Supabase 表、grant 权限和 RLS 策略已经创建。详情：" + error.message.slice(0, 220)
         );
       }
     }
@@ -1331,9 +1331,9 @@
       } catch (error) {
         document.getElementById("submissions-output").hidden = true;
         showStatus(
-          "Could not load submissions. Check that the Supabase table and select policy exist. Details: " + error.message.slice(0, 220),
-          "Kon inzendingen niet laden. Controleer of de Supabase-tabel en select-policy bestaan. Details: " + error.message.slice(0, 220),
-          "无法读取提交记录。请确认 Supabase 表和 select 权限策略已经创建。详情：" + error.message.slice(0, 220)
+          "Could not load submissions. Check that the Supabase table, grants, and select policy exist. Details: " + error.message.slice(0, 220),
+          "Kon inzendingen niet laden. Controleer of de Supabase-tabel, grants en select-policy bestaan. Details: " + error.message.slice(0, 220),
+          "无法读取提交记录。请确认 Supabase 表、grant 权限和 select 策略已经创建。详情：" + error.message.slice(0, 220)
         );
       }
     }

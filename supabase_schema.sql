@@ -1,4 +1,4 @@
-create table public.expert_meeting_submissions (
+create table if not exists public.expert_meeting_submissions (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
 
@@ -22,11 +22,20 @@ create table public.expert_meeting_submissions (
 
 alter table public.expert_meeting_submissions enable row level security;
 
+grant usage on schema public to anon;
+grant select, insert on public.expert_meeting_submissions to anon;
+
+drop policy if exists "Anyone can submit expert meeting responses"
+on public.expert_meeting_submissions;
+
 create policy "Anyone can submit expert meeting responses"
 on public.expert_meeting_submissions
 for insert
 to anon
 with check (true);
+
+drop policy if exists "Anyone can view expert meeting responses"
+on public.expert_meeting_submissions;
 
 create policy "Anyone can view expert meeting responses"
 on public.expert_meeting_submissions
