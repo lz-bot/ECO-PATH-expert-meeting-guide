@@ -344,6 +344,7 @@
       "created_at",
       "expert",
       "language",
+      "recorder_name",
       "q1_asked",
       "q1_answer",
       "q2_asked",
@@ -397,6 +398,7 @@
       q4_answer: "Q4 Main clinical steps",
       q5_answer: "Q5 Variants, branches, general hospital versus UMC",
       q6_answer: "Q6 Documents, timing, validation contact",
+      recorder_name: "Filled by / recorder",
       recommended_pathway: "Recommended pathway",
       start_point: "Start point",
       endpoint: "Endpoint",
@@ -524,7 +526,7 @@
         titleBox.appendChild(title);
         const chips = document.createElement("div");
         chips.className = "chips";
-        [row.expert, formatDate(row.created_at), row.language ? "lang: " + row.language : ""]
+        [row.expert, row.recorder_name ? "filled by: " + row.recorder_name : "", formatDate(row.created_at), row.language ? "lang: " + row.language : ""]
           .filter(Boolean)
           .forEach(value => addText(chips, "chip", value));
         titleBox.appendChild(chips);
@@ -643,6 +645,7 @@
         lines.push("## " + (index + 1) + ". " + (text(row.recommended_pathway) || "Untitled submission"));
         lines.push("");
         lines.push("- Expert: " + (text(row.expert) || "Not recorded"));
+        lines.push("- Filled by: " + (text(row.recorder_name) || "Not recorded"));
         lines.push("- Submitted: " + (formatDate(row.created_at) || "Not recorded"));
         lines.push("- Language: " + (text(row.language) || "Not recorded"));
         lines.push("");

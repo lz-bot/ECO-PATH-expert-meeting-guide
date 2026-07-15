@@ -140,11 +140,34 @@
       padding: 18px;
     }
 
+    .meeting-toolbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
     .tabs {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 14px;
+    }
+
+    .recorder-field {
+      width: min(100%, 280px);
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: var(--shadow);
+    }
+
+    .recorder-field label {
+      margin-bottom: 6px;
+      color: var(--accent-dark);
+      font-size: 13px;
     }
 
     .grid {
@@ -373,6 +396,9 @@
       .brand { align-items: flex-start; }
       .brand-logo { width: 132px; }
       .controls { justify-content: flex-start; }
+      .meeting-toolbar { display: block; }
+      .tabs { margin-bottom: 10px; }
+      .recorder-field { width: 100%; }
       .grid { grid-template-columns: 1fr; }
       .fields { grid-template-columns: 1fr; }
       .decision-row { grid-template-columns: 1fr; }
@@ -411,9 +437,17 @@
   </header>
 
   <main>
-    <div class="tabs" role="tablist" aria-label="expert selection">
-      <button type="button" class="tab active" data-expert="joost"><span class="en">Joost Boormans | Urology</span><span class="nl">Joost Boormans | Urologie</span><span class="zh">Joost Boormans | 泌尿外科</span></button>
-      <button type="button" class="tab" data-expert="peter"><span class="en">Peter Siersema | Gastroenterology</span><span class="nl">Peter Siersema | Gastro-enterologie</span><span class="zh">Peter Siersema | 消化内科</span></button>
+    <div class="meeting-toolbar">
+      <div class="tabs" role="tablist" aria-label="expert selection">
+        <button type="button" class="tab active" data-expert="joost"><span class="en">Joost Boormans | Urology</span><span class="nl">Joost Boormans | Urologie</span><span class="zh">Joost Boormans | 泌尿外科</span></button>
+        <button type="button" class="tab" data-expert="peter"><span class="en">Peter Siersema | Gastroenterology</span><span class="nl">Peter Siersema | Gastro-enterologie</span><span class="zh">Peter Siersema | 消化内科</span></button>
+      </div>
+      <div class="recorder-field">
+        <label class="en">Filled by / recorder</label>
+        <label class="nl">Ingevuld door / notulist</label>
+        <label class="zh">填写人 / 记录人</label>
+        <input type="text" data-save="shared.recorder_name" placeholder="Name">
+      </div>
     </div>
 
     <section class="grid">
@@ -1170,6 +1204,7 @@
       const row = {
         expert: activeExpertName(),
         language: document.body.dataset.lang || "en",
+        recorder_name: shared("recorder_name"),
         q1_asked: Boolean(valueBySave(expertId + ".core.q1")),
         q1_answer: note("pathway"),
         q2_asked: Boolean(valueBySave(expertId + ".core.q2")),

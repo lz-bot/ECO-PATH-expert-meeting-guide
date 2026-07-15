@@ -11,6 +11,7 @@ The guide is designed for the first round of expert consultation, with a narrow 
 
 The guide helps capture clear expert answers on:
 
+- person filling or recording the form;
 - recommended first pathway;
 - start point;
 - endpoint;

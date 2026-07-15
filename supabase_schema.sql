@@ -4,6 +4,7 @@ create table if not exists public.expert_meeting_submissions (
 
   expert text,
   language text,
+  recorder_name text,
 
   q1_asked boolean,
   q1_answer text,
@@ -43,6 +44,7 @@ create table if not exists public.expert_meeting_admins (
 );
 
 alter table public.expert_meeting_submissions
+  add column if not exists recorder_name text,
   add column if not exists q1_asked boolean,
   add column if not exists q1_answer text,
   add column if not exists q2_asked boolean,
