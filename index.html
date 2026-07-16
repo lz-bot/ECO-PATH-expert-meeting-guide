@@ -405,12 +405,189 @@
     }
 
     @media print {
-      header, .tabs, .footer-actions, button { display: none !important; }
-      main { max-width: none; padding: 0; }
-      .grid { display: block; }
-      .panel, .section { box-shadow: none; break-inside: avoid; }
-      .expert { display: block !important; }
-      textarea { min-height: 70px; }
+      @page {
+        size: A4;
+        margin: 14mm 12mm;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      html { scroll-behavior: auto; }
+
+      body {
+        background: #fff;
+        color: #102836;
+        font-size: 10.5pt;
+        line-height: 1.35;
+      }
+
+      header {
+        position: static;
+        background: #fff;
+        border-bottom: 1px solid #bfddea;
+        backdrop-filter: none;
+        margin-bottom: 7mm;
+      }
+
+      .topbar {
+        max-width: none;
+        padding: 0 0 6mm;
+        gap: 8mm;
+        align-items: center;
+      }
+
+      .brand-logo {
+        width: 38mm;
+        filter: none;
+      }
+
+      h1 {
+        font-size: 17pt;
+        line-height: 1.15;
+      }
+
+      .subtitle {
+        font-size: 9.5pt;
+      }
+
+      .controls,
+      .tabs,
+      .footer-actions,
+      .export-panel,
+      .status-line,
+      button {
+        display: none !important;
+      }
+
+      main {
+        max-width: none;
+        padding: 0;
+      }
+
+      .meeting-toolbar {
+        display: block;
+        margin-bottom: 6mm;
+      }
+
+      .recorder-field {
+        width: 100%;
+        padding: 4mm;
+        background: #fff;
+        border: 1px solid #bfddea;
+        box-shadow: none;
+        break-inside: avoid;
+      }
+
+      .grid {
+        display: block;
+      }
+
+      aside.panel {
+        margin-bottom: 6mm;
+      }
+
+      .panel,
+      .section {
+        border-color: #bfddea;
+        border-radius: 4mm;
+        box-shadow: none;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .panel {
+        padding: 5mm;
+      }
+
+      .section {
+        margin-bottom: 5mm;
+        overflow: visible;
+      }
+
+      details.section > summary {
+        padding: 3.5mm 4mm;
+        background: #eef9fd;
+        border-bottom: 1px solid #bfddea;
+      }
+
+      details.section > summary::after {
+        display: none;
+      }
+
+      .section-body {
+        padding: 4mm;
+      }
+
+      .expert {
+        display: none !important;
+      }
+
+      .expert.active {
+        display: block !important;
+      }
+
+      .prompt {
+        grid-template-columns: 22mm minmax(0, 1fr);
+        gap: 3mm;
+        padding: 3mm 0;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .fields {
+        grid-template-columns: 1fr;
+        gap: 3mm;
+      }
+
+      .decision-row {
+        grid-template-columns: minmax(0, 1fr) 45mm;
+        gap: 3mm;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      input[type="text"],
+      select,
+      textarea {
+        border: 1px solid #b9ccd8;
+        border-radius: 2mm;
+        padding: 2.4mm;
+        background: #fff;
+        color: #102836;
+        box-shadow: none;
+      }
+
+      textarea {
+        min-height: 18mm;
+        overflow: visible;
+        resize: none;
+      }
+
+      .prompt-answer textarea {
+        min-height: 14mm;
+      }
+
+      .matrix {
+        font-size: 9.5pt;
+      }
+
+      .matrix tr {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .tag,
+      .agenda-item,
+      .info {
+        background: #eef9fd;
+      }
+
+      a[href]::after {
+        content: "";
+      }
     }
   </style>
 </head>
@@ -941,7 +1118,7 @@
           </div>
         </details>
 
-        <div class="panel">
+        <div class="panel export-panel">
           <h2 class="en">Exported meeting notes</h2>
           <h2 class="nl">Geexporteerde vergadernotities</h2>
           <h2 class="zh">导出的会议记录</h2>
@@ -1464,13 +1641,64 @@
       setExpert("joost");
     }
 
+    let printState = null;
+
+    function prepareForPrint() {
+      if (printState) restoreAfterPrint();
+      document.querySelectorAll("[data-save]").forEach(saveField);
+
+      printState = {
+        details: [],
+        textareas: []
+      };
+
+      document.querySelectorAll("details.section").forEach(details => {
+        printState.details.push({
+          element: details,
+          open: details.open
+        });
+        details.open = true;
+      });
+
+      document.querySelectorAll("textarea").forEach(textarea => {
+        printState.textareas.push({
+          element: textarea,
+          height: textarea.style.height,
+          overflow: textarea.style.overflow
+        });
+        textarea.style.height = "auto";
+        textarea.style.height = Math.max(textarea.scrollHeight, 70) + "px";
+        textarea.style.overflow = "hidden";
+      });
+    }
+
+    function restoreAfterPrint() {
+      if (!printState) return;
+
+      printState.details.forEach(item => {
+        item.element.open = item.open;
+      });
+
+      printState.textareas.forEach(item => {
+        item.element.style.height = item.height;
+        item.element.style.overflow = item.overflow;
+      });
+
+      printState = null;
+    }
+
     hydratePrompts();
     importEmbeddedPrefill();
 
     document.getElementById("lang-en").addEventListener("click", () => setLanguage("en"));
     document.getElementById("lang-nl").addEventListener("click", () => setLanguage("nl"));
     document.getElementById("lang-zh").addEventListener("click", () => setLanguage("zh"));
-    document.getElementById("print-btn").addEventListener("click", () => window.print());
+    window.addEventListener("beforeprint", prepareForPrint);
+    window.addEventListener("afterprint", restoreAfterPrint);
+    document.getElementById("print-btn").addEventListener("click", () => {
+      prepareForPrint();
+      window.print();
+    });
     document.getElementById("export-btn").addEventListener("click", exportNotes);
     document.getElementById("download-btn").addEventListener("click", downloadMarkdown);
     document.getElementById("download-html-btn").addEventListener("click", downloadFilledHtml);
